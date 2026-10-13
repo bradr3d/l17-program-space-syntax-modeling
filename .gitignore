@@ -1,0 +1,14 @@
+# Build outputs
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Rhino runtime logs
+.rhinocode/
+
+# Generated / temp
+_zip_extract/
+_ghx_objects.json
+_ghx_wires.json
+windows_smoke_test_results.json

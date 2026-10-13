@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\Rhino2DGeometry\Models.cs" />
+    <Compile Include="..\Rhino2DGeometry\UserTextParser.cs" />
+    <Compile Include="..\Rhino2DGeometry\LayoutEngine.cs" />
+    <Compile Include="..\Rhino2DGeometry\CirculationEngine.cs" />
+    <Compile Include="..\Rhino2DGeometry\WallOpenings.cs" />
+    <Compile Include="..\Rhino2DGeometry\EngineSelfTests.cs" />
+    <Compile Include="..\Rhino2DGeometry\DocumentWriter.cs" />
+    <Compile Include="..\Rhino2DGeometry\BubbleMetadataReader.cs" />
+    <Reference Include="RhinoCommon">
+      <HintPath>C:\Program Files\Rhino 8\System\netcore\RhinoCommon.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
