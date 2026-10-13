@@ -1,0 +1,8 @@
+* text=auto
+*.cs text eol=lf
+*.golden.json text eol=lf
+# Fixture bytes are hashed into program.sample.json; keep them identical on every OS.
+tests/Psm.Data.Tests/Fixtures/*.csv text eol=lf
+tests/Psm.Data.Tests/Fixtures/*.json text eol=lf
+*.xlsx binary
+*.xlsm binary

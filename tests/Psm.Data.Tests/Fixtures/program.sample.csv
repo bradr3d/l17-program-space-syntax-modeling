@@ -1,0 +1,11 @@
+Dept No,Program Element,Room Qty/ Units,Net SF/ Units,Total Program SF,Design Capacity / Student Stations,Total Stations,Notes/Comments,Conn. Primary,Flr,Color,Color RGB,Shared Access,Room Width Min.,Aspect Ratio
+1,Core Curricula - Classrooms,,,,,,,,,,,,,
+1.1,Classroom - K,4,850,3400,16,64,"Relocated, smaller size; first floor",1.2,1,,"168, 174, 73",,,1 to 1
+1.1.1,Restroom,4,50,200,0,0,(1) per classroom,1.1,1,,"168, 174, 73",x,5,None
+1.1.2,Vestibule,4,50,200,0,0,connecting classrooms/RRs,1.1.1,1,,"168, 174, 73",x,,
+1.2,Classroom - 1,4,850,3400,16,64,,1.1,1,,"168, 174, 73",,,1 to 1
+2,Core Curricula - Labs,,,,,,,,,,,,,
+2.1,Art,1,1000,1000,0,0,project space for exploration,1.2,,,"111, 115, 79",,,
+2.1.1,Storage,1,250,250,0,0,,2.1,,,"111, 115, 79",x,,
+2.1.2,Student Restroom,1,50,50,0,0,,2.1,,,"111, 115, 79",x,,
+2.1.3,Kiln,1,125,125,0,0,(1) kiln,2.1,,,"111, 115, 79",x,,

@@ -1,0 +1,3795 @@
+{
+  "schemaVersion": 1,
+  "units": {
+    "length": "ft",
+    "area": "sf"
+  },
+  "source": {
+    "kind": "xlsx",
+    "fileName": "Program_ExcelToGrasshopper_Test.xlsm",
+    "sheet": "ProgramInfo",
+    "fileSha256": "a2b23d755fd959fd588bb85fcd305226101249c550afc6643a24990258622bcb",
+    "project": {
+      "name": "Lower School Concept Design",
+      "client": "Shorecrest Prep",
+      "date": "2026-04-01",
+      "revision": "2",
+      "number": "27520"
+    }
+  },
+  "departments": [
+    {
+      "id": "1",
+      "name": "Core Curricula - Classrooms"
+    },
+    {
+      "id": "2",
+      "name": "Core Curricula - Labs"
+    },
+    {
+      "id": "3",
+      "name": "Core- Curricula - Specials"
+    },
+    {
+      "id": "4",
+      "name": "Noncore Curricula Instructional Support"
+    },
+    {
+      "id": "5",
+      "name": "Music"
+    },
+    {
+      "id": "6",
+      "name": "Athletics"
+    },
+    {
+      "id": "7",
+      "name": "Administration/Student Services"
+    },
+    {
+      "id": "8",
+      "name": "Custodial/Building Support"
+    },
+    {
+      "id": "9",
+      "name": "Media"
+    }
+  ],
+  "roomTypes": [
+    {
+      "id": "1.1",
+      "parentId": null,
+      "departmentId": "1",
+      "name": "Classroom - K",
+      "qty": 4,
+      "netSf": 850,
+      "totalSf": 3400,
+      "stations": 16,
+      "connPrimary": "1.2",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": "1 to 1",
+      "absorbed": false,
+      "notes": "Relocated from Manning, smaller size (existing ~800sf); first floor",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 2,
+        "column": null
+      }
+    },
+    {
+      "id": "1.1.1",
+      "parentId": "1.1",
+      "departmentId": "1",
+      "name": "Restroom",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.1",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": 5,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per classroom",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 3,
+        "column": null
+      }
+    },
+    {
+      "id": "1.1.2",
+      "parentId": "1.1",
+      "departmentId": "1",
+      "name": "Vestibule",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.1.1",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "connecting classrooms/RRs",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 4,
+        "column": null
+      }
+    },
+    {
+      "id": "1.2",
+      "parentId": null,
+      "departmentId": "1",
+      "name": "Classroom - 1",
+      "qty": 4,
+      "netSf": 850,
+      "totalSf": 3400,
+      "stations": 16,
+      "connPrimary": "1.3",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": "1 to 1",
+      "absorbed": false,
+      "notes": "Relocated from Manning, smaller size (existing ~850sf); first floor",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 5,
+        "column": null
+      }
+    },
+    {
+      "id": "1.2.1",
+      "parentId": "1.2",
+      "departmentId": "1",
+      "name": "Restroom",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.2",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per classroom",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 6,
+        "column": null
+      }
+    },
+    {
+      "id": "1.2.2",
+      "parentId": "1.2",
+      "departmentId": "1",
+      "name": "Vestibule",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.2.1",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "connecting classrooms/RRs",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 7,
+        "column": null
+      }
+    },
+    {
+      "id": "1.3",
+      "parentId": null,
+      "departmentId": "1",
+      "name": "Classroom - 2",
+      "qty": 4,
+      "netSf": 850,
+      "totalSf": 3400,
+      "stations": 16,
+      "connPrimary": "1.4",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from Manning, similar size",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 8,
+        "column": null
+      }
+    },
+    {
+      "id": "1.3.1",
+      "parentId": "1.3",
+      "departmentId": "1",
+      "name": "Restroom",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.3",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per classroom",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 9,
+        "column": null
+      }
+    },
+    {
+      "id": "1.3.2",
+      "parentId": "1.3",
+      "departmentId": "1",
+      "name": "Vestibule",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.3.1",
+      "floorPref": 1,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "connecting classrooms/RRs",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 10,
+        "column": null
+      }
+    },
+    {
+      "id": "1.4",
+      "parentId": null,
+      "departmentId": "1",
+      "name": "Classroom - 3",
+      "qty": 4,
+      "netSf": 850,
+      "totalSf": 3400,
+      "stations": 16,
+      "connPrimary": "1.5",
+      "floorPref": null,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from Manning, similar size",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 11,
+        "column": null
+      }
+    },
+    {
+      "id": "1.4.1",
+      "parentId": "1.4",
+      "departmentId": "1",
+      "name": "Restroom",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.4",
+      "floorPref": null,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per classroom",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 12,
+        "column": null
+      }
+    },
+    {
+      "id": "1.4.2",
+      "parentId": "1.4",
+      "departmentId": "1",
+      "name": "Vestibule",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.4.1",
+      "floorPref": null,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "connecting classrooms/RRs",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 13,
+        "column": null
+      }
+    },
+    {
+      "id": "1.5",
+      "parentId": null,
+      "departmentId": "1",
+      "name": "Classroom - 4",
+      "qty": 4,
+      "netSf": 850,
+      "totalSf": 3400,
+      "stations": 16,
+      "connPrimary": "1.1",
+      "floorPref": null,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from Manning, similar size",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 14,
+        "column": null
+      }
+    },
+    {
+      "id": "1.5.1",
+      "parentId": "1.5",
+      "departmentId": "1",
+      "name": "Restroom",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.5",
+      "floorPref": null,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per classroom",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 15,
+        "column": null
+      }
+    },
+    {
+      "id": "1.5.2",
+      "parentId": "1.5",
+      "departmentId": "1",
+      "name": "Vestibule",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "1.5.1",
+      "floorPref": null,
+      "color": {
+        "r": 168,
+        "g": 174,
+        "b": 73
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "connecting classrooms/RRs",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 16,
+        "column": null
+      }
+    },
+    {
+      "id": "2.1",
+      "parentId": null,
+      "departmentId": "2",
+      "name": "Art",
+      "qty": 1,
+      "netSf": 1000,
+      "totalSf": 1000,
+      "stations": 0,
+      "connPrimary": "1.4",
+      "floorPref": null,
+      "color": {
+        "r": 111,
+        "g": 115,
+        "b": 79
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from Raymund, similar size",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 18,
+        "column": null
+      }
+    },
+    {
+      "id": "2.1.1",
+      "parentId": "2.1",
+      "departmentId": "2",
+      "name": "Storage",
+      "qty": 1,
+      "netSf": 250,
+      "totalSf": 250,
+      "stations": 0,
+      "connPrimary": "2.1",
+      "floorPref": null,
+      "color": {
+        "r": 111,
+        "g": 115,
+        "b": 79
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 19,
+        "column": null
+      }
+    },
+    {
+      "id": "2.1.2",
+      "parentId": "2.1",
+      "departmentId": "2",
+      "name": "Student Restroom",
+      "qty": 1,
+      "netSf": 50,
+      "totalSf": 50,
+      "stations": 0,
+      "connPrimary": "2.1",
+      "floorPref": null,
+      "color": {
+        "r": 111,
+        "g": 115,
+        "b": 79
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 20,
+        "column": null
+      }
+    },
+    {
+      "id": "2.1.3",
+      "parentId": "2.1",
+      "departmentId": "2",
+      "name": "Kiln",
+      "qty": 1,
+      "netSf": 125,
+      "totalSf": 125,
+      "stations": 0,
+      "connPrimary": "2.1",
+      "floorPref": null,
+      "color": {
+        "r": 111,
+        "g": 115,
+        "b": 79
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) kiln for LS",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 21,
+        "column": null
+      }
+    },
+    {
+      "id": "3.1",
+      "parentId": null,
+      "departmentId": "3",
+      "name": "Spanish/Language",
+      "qty": 2,
+      "netSf": 650,
+      "totalSf": 1300,
+      "stations": 0,
+      "connPrimary": "1.5",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from Raymund/Manning, existing 500 SF is too small",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 23,
+        "column": null
+      }
+    },
+    {
+      "id": "3.2",
+      "parentId": null,
+      "departmentId": "3",
+      "name": "Block Room",
+      "qty": 0,
+      "netSf": 500,
+      "totalSf": 0,
+      "stations": 0,
+      "connPrimary": "3.1",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": true,
+      "notes": "co-located in common area",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 24,
+        "column": null
+      }
+    },
+    {
+      "id": "3.3",
+      "parentId": null,
+      "departmentId": "3",
+      "name": "Student Restroom",
+      "qty": 2,
+      "netSf": 50,
+      "totalSf": 100,
+      "stations": 0,
+      "connPrimary": "3.1",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "shared amongst specials, if adjacency allows",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 25,
+        "column": null
+      }
+    },
+    {
+      "id": "3.4",
+      "parentId": null,
+      "departmentId": "3",
+      "name": "Life Skills",
+      "qty": 0,
+      "netSf": 500,
+      "totalSf": 0,
+      "stations": 0,
+      "connPrimary": "1.3",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": true,
+      "notes": "kitchen, co-located with common area; want to be able to cook with children",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 26,
+        "column": null
+      }
+    },
+    {
+      "id": "3.5",
+      "parentId": null,
+      "departmentId": "3",
+      "name": "STEAM",
+      "qty": 1,
+      "netSf": 1100,
+      "totalSf": 1100,
+      "stations": 0,
+      "connPrimary": "1.2",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Spark Lab; (4)th Alpha location match that SF",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 27,
+        "column": null
+      }
+    },
+    {
+      "id": "3.5.1",
+      "parentId": "3.5",
+      "departmentId": "3",
+      "name": "Storage",
+      "qty": 1,
+      "netSf": 150,
+      "totalSf": 150,
+      "stations": 0,
+      "connPrimary": "3.5",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 28,
+        "column": null
+      }
+    },
+    {
+      "id": "3.6",
+      "parentId": null,
+      "departmentId": "3",
+      "name": "Makerspace",
+      "qty": 1,
+      "netSf": 650,
+      "totalSf": 650,
+      "stations": 0,
+      "connPrimary": "1.5",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 29,
+        "column": null
+      }
+    },
+    {
+      "id": "3.6.1",
+      "parentId": "3.6",
+      "departmentId": "3",
+      "name": "Storage",
+      "qty": 1,
+      "netSf": 150,
+      "totalSf": 150,
+      "stations": 0,
+      "connPrimary": "3.6",
+      "floorPref": null,
+      "color": {
+        "r": 133,
+        "g": 161,
+        "b": 117
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 30,
+        "column": null
+      }
+    },
+    {
+      "id": "4.1",
+      "parentId": null,
+      "departmentId": "4",
+      "name": "Common Area",
+      "qty": 5,
+      "netSf": 775,
+      "totalSf": 3875,
+      "stations": 0,
+      "connPrimary": "1.1",
+      "floorPref": null,
+      "color": {
+        "r": 167,
+        "g": 185,
+        "b": 189
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per grade level; possibly interconnected to create central atrium; Pull out wet spaces?",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 32,
+        "column": null
+      }
+    },
+    {
+      "id": "4.2",
+      "parentId": null,
+      "departmentId": "4",
+      "name": "Grade Level Storage",
+      "qty": 5,
+      "netSf": 250,
+      "totalSf": 1250,
+      "stations": 0,
+      "connPrimary": "1.2",
+      "floorPref": null,
+      "color": {
+        "r": 167,
+        "g": 185,
+        "b": 189
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per grade level",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 33,
+        "column": null
+      }
+    },
+    {
+      "id": "4.3",
+      "parentId": null,
+      "departmentId": "4",
+      "name": "Teacher Planning/Workroom",
+      "qty": 5,
+      "netSf": 300,
+      "totalSf": 1500,
+      "stations": 0,
+      "connPrimary": "1.3",
+      "floorPref": null,
+      "color": {
+        "r": 167,
+        "g": 185,
+        "b": 189
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per grade level; like existing Jack&Jill connection",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 34,
+        "column": null
+      }
+    },
+    {
+      "id": "4.4",
+      "parentId": null,
+      "departmentId": "4",
+      "name": "Community Collab",
+      "qty": 0,
+      "netSf": 1500,
+      "totalSf": 0,
+      "stations": 0,
+      "connPrimary": "1.4",
+      "floorPref": null,
+      "color": {
+        "r": 167,
+        "g": 185,
+        "b": 189
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": true,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 35,
+        "column": null
+      }
+    },
+    {
+      "id": "4.5",
+      "parentId": null,
+      "departmentId": "4",
+      "name": "Multipurpose Room",
+      "qty": 1,
+      "netSf": 1200,
+      "totalSf": 1200,
+      "stations": 0,
+      "connPrimary": "4.3",
+      "floorPref": null,
+      "color": {
+        "r": 167,
+        "g": 185,
+        "b": 189
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "possible operable partition to split into two classrooms if needed; may increase in size to consider the LS classroom module",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 36,
+        "column": null
+      }
+    },
+    {
+      "id": "5.1",
+      "parentId": null,
+      "departmentId": "5",
+      "name": "Music",
+      "qty": 1,
+      "netSf": 1000,
+      "totalSf": 1000,
+      "stations": 0,
+      "connPrimary": "1.1",
+      "floorPref": null,
+      "color": {
+        "r": 135,
+        "g": 191,
+        "b": 174
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from Raymund, similar size",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 38,
+        "column": null
+      }
+    },
+    {
+      "id": "5.1.1",
+      "parentId": "5.1",
+      "departmentId": "5",
+      "name": "Storage",
+      "qty": 1,
+      "netSf": 300,
+      "totalSf": 300,
+      "stations": 0,
+      "connPrimary": "5.1",
+      "floorPref": null,
+      "color": {
+        "r": 135,
+        "g": 191,
+        "b": 174
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 39,
+        "column": null
+      }
+    },
+    {
+      "id": "5.1.2",
+      "parentId": "5.1",
+      "departmentId": "5",
+      "name": "Student Restroom",
+      "qty": 1,
+      "netSf": 50,
+      "totalSf": 50,
+      "stations": 0,
+      "connPrimary": "5.1",
+      "floorPref": null,
+      "color": {
+        "r": 135,
+        "g": 191,
+        "b": 174
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 40,
+        "column": null
+      }
+    },
+    {
+      "id": "6.1",
+      "parentId": null,
+      "departmentId": "6",
+      "name": "Mini-Gym",
+      "qty": 1,
+      "netSf": 4000,
+      "totalSf": 4000,
+      "stations": 0,
+      "connPrimary": "4.1",
+      "floorPref": 1,
+      "color": {
+        "r": 235,
+        "g": 190,
+        "b": 132
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "previous mini-gym was small, ceiling was low; would like to fit a grade level",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 42,
+        "column": null
+      }
+    },
+    {
+      "id": "6.1.1",
+      "parentId": "6.1",
+      "departmentId": "6",
+      "name": "Storage",
+      "qty": 1,
+      "netSf": 400,
+      "totalSf": 400,
+      "stations": 0,
+      "connPrimary": "6.1",
+      "floorPref": 1,
+      "color": {
+        "r": 235,
+        "g": 190,
+        "b": 132
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 43,
+        "column": null
+      }
+    },
+    {
+      "id": "6.1.2",
+      "parentId": "6.1",
+      "departmentId": "6",
+      "name": "Office",
+      "qty": 4,
+      "netSf": 125,
+      "totalSf": 500,
+      "stations": 0,
+      "connPrimary": "6.1",
+      "floorPref": 1,
+      "color": {
+        "r": 235,
+        "g": 190,
+        "b": 132
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "large space for all (4), or (2) for (2)",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 44,
+        "column": null
+      }
+    },
+    {
+      "id": "6.1.3",
+      "parentId": "6.1",
+      "departmentId": "6",
+      "name": "Storage - Aux Programs",
+      "qty": 1,
+      "netSf": 400,
+      "totalSf": 400,
+      "stations": 0,
+      "connPrimary": "6.1",
+      "floorPref": null,
+      "color": {
+        "r": 235,
+        "g": 190,
+        "b": 132
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "mostly function in LS/ES classrooms or mini-gym",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 45,
+        "column": null
+      }
+    },
+    {
+      "id": "7.1",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "General Admin Reception",
+      "qty": 1,
+      "netSf": 17,
+      "totalSf": 298,
+      "stations": 0,
+      "connPrimary": "4.1",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "5% cap",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 47,
+        "column": null
+      }
+    },
+    {
+      "id": "7.1.1",
+      "parentId": "7.1",
+      "departmentId": "7",
+      "name": "Administrative Storage",
+      "qty": 1,
+      "netSf": 100,
+      "totalSf": 100,
+      "stations": 0,
+      "connPrimary": "7.1",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 48,
+        "column": null
+      }
+    },
+    {
+      "id": "7.2",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "LS Head",
+      "qty": 1,
+      "netSf": 200,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "7.3",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(8) max for a meeting",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 49,
+        "column": null
+      }
+    },
+    {
+      "id": "7.3",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Office",
+      "qty": 4,
+      "netSf": 125,
+      "totalSf": 500,
+      "stations": 0,
+      "connPrimary": "7.4",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "LS administration",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 50,
+        "column": null
+      }
+    },
+    {
+      "id": "7.4",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Conference Room",
+      "qty": 1,
+      "netSf": 250,
+      "totalSf": 250,
+      "stations": 0,
+      "connPrimary": "7.1",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "slightly larger than existing",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 51,
+        "column": null
+      }
+    },
+    {
+      "id": "7.5",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "LS Counselor",
+      "qty": 2,
+      "netSf": 175,
+      "totalSf": 350,
+      "stations": 0,
+      "connPrimary": "7.2",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Manning space is ~500sf",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 52,
+        "column": null
+      }
+    },
+    {
+      "id": "7.5.1",
+      "parentId": "7.5",
+      "departmentId": "7",
+      "name": "Resource",
+      "qty": 1,
+      "netSf": 500,
+      "totalSf": 500,
+      "stations": 0,
+      "connPrimary": "7.5",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "go as an entire class, she will go get students one-on-one; more central location for teachers to reduce travel time",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 53,
+        "column": null
+      }
+    },
+    {
+      "id": "7.6",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Curriculum room",
+      "qty": 1,
+      "netSf": 300,
+      "totalSf": 300,
+      "stations": 0,
+      "connPrimary": "4.3",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 54,
+        "column": null
+      }
+    },
+    {
+      "id": "7.7",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Staff Restroom",
+      "qty": 2,
+      "netSf": 50,
+      "totalSf": 100,
+      "stations": 0,
+      "connPrimary": "7.6",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 55,
+        "column": null
+      }
+    },
+    {
+      "id": "7.8",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Workroom/Break",
+      "qty": 1,
+      "netSf": 400,
+      "totalSf": 400,
+      "stations": 0,
+      "connPrimary": "7.7",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 56,
+        "column": null
+      }
+    },
+    {
+      "id": "7.8.1",
+      "parentId": "7.8",
+      "departmentId": "7",
+      "name": "Wellness Room",
+      "qty": 1,
+      "netSf": 120,
+      "totalSf": 120,
+      "stations": 0,
+      "connPrimary": "7.8",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 57,
+        "column": null
+      }
+    },
+    {
+      "id": "7.9",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Clinic",
+      "qty": 1,
+      "netSf": 500,
+      "totalSf": 500,
+      "stations": 0,
+      "connPrimary": "1.1",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from CC; existing 420sf; move to Lower School, keep centrally located; have both interior and exterior access",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 58,
+        "column": null
+      }
+    },
+    {
+      "id": "7.9.1",
+      "parentId": "7.9",
+      "departmentId": "7",
+      "name": "Student Restroom",
+      "qty": 1,
+      "netSf": 100,
+      "totalSf": 100,
+      "stations": 0,
+      "connPrimary": "7.9",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "include shower",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 59,
+        "column": null
+      }
+    },
+    {
+      "id": "7.9.2",
+      "parentId": "7.9",
+      "departmentId": "7",
+      "name": "Security Office",
+      "qty": 1,
+      "netSf": 125,
+      "totalSf": 125,
+      "stations": 0,
+      "connPrimary": "7.9",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "exterior access; works closely with the clinic; centrally located for fastest response time to any area of campus",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 60,
+        "column": null
+      }
+    },
+    {
+      "id": "7.10",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "CAE Workroom/Shared Resource",
+      "qty": 1,
+      "netSf": 500,
+      "totalSf": 500,
+      "stations": 0,
+      "connPrimary": "1.2",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "CAE; can be the same as 7.10",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 61,
+        "column": null
+      }
+    },
+    {
+      "id": "7.10.1",
+      "parentId": "7.10",
+      "departmentId": "7",
+      "name": "Office",
+      "qty": 3,
+      "netSf": 125,
+      "totalSf": 375,
+      "stations": 0,
+      "connPrimary": "7.10",
+      "floorPref": 1,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "CAE; Learning Specialists",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 62,
+        "column": null
+      }
+    },
+    {
+      "id": "7.11",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Homework Lab",
+      "qty": 0,
+      "netSf": 500,
+      "totalSf": 0,
+      "stations": 0,
+      "connPrimary": "1.3",
+      "floorPref": null,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": true,
+      "notes": "Can this be the CAE workroom/shared resource space?",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 63,
+        "column": null
+      }
+    },
+    {
+      "id": "7.11.1",
+      "parentId": "7.11",
+      "departmentId": "7",
+      "name": "Tutoring",
+      "qty": 6,
+      "netSf": 100,
+      "totalSf": 600,
+      "stations": 0,
+      "connPrimary": "7.11",
+      "floorPref": null,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "CAE; located adjacent to 7.11; Jennifer verified count",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 64,
+        "column": null
+      }
+    },
+    {
+      "id": "7.12",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Speech",
+      "qty": 2,
+      "netSf": 125,
+      "totalSf": 250,
+      "stations": 0,
+      "connPrimary": "1.1",
+      "floorPref": null,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "CAE; ES uses this next most. would like additional offices in ES",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 65,
+        "column": null
+      }
+    },
+    {
+      "id": "7.13",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "OT",
+      "qty": 1,
+      "netSf": 300,
+      "totalSf": 300,
+      "stations": 0,
+      "connPrimary": "1.2",
+      "floorPref": null,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "CAE; ES uses this the most; ideally (2) separate spaces for LS and ES, but could be smaller. would like additional space in ES",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 66,
+        "column": null
+      }
+    },
+    {
+      "id": "7.13.1",
+      "parentId": "7.13",
+      "departmentId": "7",
+      "name": "Storage",
+      "qty": 1,
+      "netSf": 100,
+      "totalSf": 100,
+      "stations": 0,
+      "connPrimary": "7.13",
+      "floorPref": null,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "CAE",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 67,
+        "column": null
+      }
+    },
+    {
+      "id": "7.13.2",
+      "parentId": "7.13",
+      "departmentId": "7",
+      "name": "Student Restroom",
+      "qty": 1,
+      "netSf": 50,
+      "totalSf": 50,
+      "stations": 0,
+      "connPrimary": "7.13",
+      "floorPref": null,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "CAE",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 68,
+        "column": null
+      }
+    },
+    {
+      "id": "7.14",
+      "parentId": null,
+      "departmentId": "7",
+      "name": "Reading Specialist",
+      "qty": 1,
+      "netSf": 300,
+      "totalSf": 300,
+      "stations": 0,
+      "connPrimary": "1.2",
+      "floorPref": null,
+      "color": {
+        "r": 180,
+        "g": 137,
+        "b": 148
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "need a kidney table for 5-6 students and desk/storage",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 69,
+        "column": null
+      }
+    },
+    {
+      "id": "8.1",
+      "parentId": null,
+      "departmentId": "8",
+      "name": "Custodial Closet",
+      "qty": 4,
+      "netSf": 70,
+      "totalSf": 280,
+      "stations": 0,
+      "connPrimary": "6.1",
+      "floorPref": null,
+      "color": {
+        "r": 21,
+        "g": 96,
+        "b": 130
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "located max 150'; qty to be verified",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 77,
+        "column": null
+      }
+    },
+    {
+      "id": "8.2",
+      "parentId": null,
+      "departmentId": "8",
+      "name": "Staff Restroom",
+      "qty": 4,
+      "netSf": 50,
+      "totalSf": 200,
+      "stations": 0,
+      "connPrimary": "7.1",
+      "floorPref": null,
+      "color": {
+        "r": 21,
+        "g": 96,
+        "b": 130
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(2) individual per floor",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 78,
+        "column": null
+      }
+    },
+    {
+      "id": "8.3",
+      "parentId": null,
+      "departmentId": "8",
+      "name": "Student Restroom",
+      "qty": 2,
+      "netSf": 50,
+      "totalSf": 100,
+      "stations": 0,
+      "connPrimary": "4.1",
+      "floorPref": null,
+      "color": {
+        "r": 21,
+        "g": 96,
+        "b": 130
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "outdoor adjacent to playground",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 79,
+        "column": null
+      }
+    },
+    {
+      "id": "8.4",
+      "parentId": null,
+      "departmentId": "8",
+      "name": "Custodial Hub",
+      "qty": 1,
+      "netSf": 250,
+      "totalSf": 250,
+      "stations": 0,
+      "connPrimary": "8.1",
+      "floorPref": 1,
+      "color": {
+        "r": 21,
+        "g": 96,
+        "b": 130
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "1st floor location",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 80,
+        "column": null
+      }
+    },
+    {
+      "id": "8.5",
+      "parentId": null,
+      "departmentId": "8",
+      "name": "Building Maintenance Storage",
+      "qty": 2,
+      "netSf": 150,
+      "totalSf": 300,
+      "stations": 0,
+      "connPrimary": "8.1",
+      "floorPref": 1,
+      "color": {
+        "r": 21,
+        "g": 96,
+        "b": 130
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "(1) per floor",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 81,
+        "column": null
+      }
+    },
+    {
+      "id": "9.1",
+      "parentId": null,
+      "departmentId": "9",
+      "name": "Open Stack",
+      "qty": 1,
+      "netSf": 2000,
+      "totalSf": 2000,
+      "stations": 0,
+      "connPrimary": "4.1",
+      "floorPref": null,
+      "color": {
+        "r": 196,
+        "g": 89,
+        "b": 67
+      },
+      "sharedAccess": false,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "Relocated from CC; space for 20,000 book collection; existing used as library ~1200sf",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 71,
+        "column": null
+      }
+    },
+    {
+      "id": "9.1.1",
+      "parentId": "9.1",
+      "departmentId": "9",
+      "name": "Office",
+      "qty": 1,
+      "netSf": 125,
+      "totalSf": 125,
+      "stations": 0,
+      "connPrimary": "9.1",
+      "floorPref": null,
+      "color": {
+        "r": 196,
+        "g": 89,
+        "b": 67
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "needs to be separate from processing due to volunteers",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 72,
+        "column": null
+      }
+    },
+    {
+      "id": "9.1.2",
+      "parentId": "9.1",
+      "departmentId": "9",
+      "name": "Tech Processing",
+      "qty": 1,
+      "netSf": 250,
+      "totalSf": 250,
+      "stations": 0,
+      "connPrimary": "9.1",
+      "floorPref": null,
+      "color": {
+        "r": 196,
+        "g": 89,
+        "b": 67
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": "match Raymund's relationship of circulation desk/tech processing/office",
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 73,
+        "column": null
+      }
+    },
+    {
+      "id": "9.1.3",
+      "parentId": "9.1",
+      "departmentId": "9",
+      "name": "Storage",
+      "qty": 1,
+      "netSf": 150,
+      "totalSf": 150,
+      "stations": 0,
+      "connPrimary": "9.1",
+      "floorPref": null,
+      "color": {
+        "r": 196,
+        "g": 89,
+        "b": 67
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 74,
+        "column": null
+      }
+    },
+    {
+      "id": "9.1.4",
+      "parentId": "9.1",
+      "departmentId": "9",
+      "name": "Student Restroom",
+      "qty": 1,
+      "netSf": 50,
+      "totalSf": 50,
+      "stations": 0,
+      "connPrimary": "9.1",
+      "floorPref": null,
+      "color": {
+        "r": 196,
+        "g": 89,
+        "b": 67
+      },
+      "sharedAccess": true,
+      "minWidthFt": null,
+      "aspect": null,
+      "absorbed": false,
+      "notes": null,
+      "source": {
+        "sheet": "ProgramInfo",
+        "row": 75,
+        "column": null
+      }
+    }
+  ],
+  "instances": [
+    {
+      "key": "1.1#0",
+      "typeId": "1.1",
+      "index": 0,
+      "label": "1.1 Classroom - K (1/4)"
+    },
+    {
+      "key": "1.1#1",
+      "typeId": "1.1",
+      "index": 1,
+      "label": "1.1 Classroom - K (2/4)"
+    },
+    {
+      "key": "1.1#2",
+      "typeId": "1.1",
+      "index": 2,
+      "label": "1.1 Classroom - K (3/4)"
+    },
+    {
+      "key": "1.1#3",
+      "typeId": "1.1",
+      "index": 3,
+      "label": "1.1 Classroom - K (4/4)"
+    },
+    {
+      "key": "1.1.1#0",
+      "typeId": "1.1.1",
+      "index": 0,
+      "label": "1.1.1 Restroom (1/4)"
+    },
+    {
+      "key": "1.1.1#1",
+      "typeId": "1.1.1",
+      "index": 1,
+      "label": "1.1.1 Restroom (2/4)"
+    },
+    {
+      "key": "1.1.1#2",
+      "typeId": "1.1.1",
+      "index": 2,
+      "label": "1.1.1 Restroom (3/4)"
+    },
+    {
+      "key": "1.1.1#3",
+      "typeId": "1.1.1",
+      "index": 3,
+      "label": "1.1.1 Restroom (4/4)"
+    },
+    {
+      "key": "1.1.2#0",
+      "typeId": "1.1.2",
+      "index": 0,
+      "label": "1.1.2 Vestibule (1/4)"
+    },
+    {
+      "key": "1.1.2#1",
+      "typeId": "1.1.2",
+      "index": 1,
+      "label": "1.1.2 Vestibule (2/4)"
+    },
+    {
+      "key": "1.1.2#2",
+      "typeId": "1.1.2",
+      "index": 2,
+      "label": "1.1.2 Vestibule (3/4)"
+    },
+    {
+      "key": "1.1.2#3",
+      "typeId": "1.1.2",
+      "index": 3,
+      "label": "1.1.2 Vestibule (4/4)"
+    },
+    {
+      "key": "1.2#0",
+      "typeId": "1.2",
+      "index": 0,
+      "label": "1.2 Classroom - 1 (1/4)"
+    },
+    {
+      "key": "1.2#1",
+      "typeId": "1.2",
+      "index": 1,
+      "label": "1.2 Classroom - 1 (2/4)"
+    },
+    {
+      "key": "1.2#2",
+      "typeId": "1.2",
+      "index": 2,
+      "label": "1.2 Classroom - 1 (3/4)"
+    },
+    {
+      "key": "1.2#3",
+      "typeId": "1.2",
+      "index": 3,
+      "label": "1.2 Classroom - 1 (4/4)"
+    },
+    {
+      "key": "1.2.1#0",
+      "typeId": "1.2.1",
+      "index": 0,
+      "label": "1.2.1 Restroom (1/4)"
+    },
+    {
+      "key": "1.2.1#1",
+      "typeId": "1.2.1",
+      "index": 1,
+      "label": "1.2.1 Restroom (2/4)"
+    },
+    {
+      "key": "1.2.1#2",
+      "typeId": "1.2.1",
+      "index": 2,
+      "label": "1.2.1 Restroom (3/4)"
+    },
+    {
+      "key": "1.2.1#3",
+      "typeId": "1.2.1",
+      "index": 3,
+      "label": "1.2.1 Restroom (4/4)"
+    },
+    {
+      "key": "1.2.2#0",
+      "typeId": "1.2.2",
+      "index": 0,
+      "label": "1.2.2 Vestibule (1/4)"
+    },
+    {
+      "key": "1.2.2#1",
+      "typeId": "1.2.2",
+      "index": 1,
+      "label": "1.2.2 Vestibule (2/4)"
+    },
+    {
+      "key": "1.2.2#2",
+      "typeId": "1.2.2",
+      "index": 2,
+      "label": "1.2.2 Vestibule (3/4)"
+    },
+    {
+      "key": "1.2.2#3",
+      "typeId": "1.2.2",
+      "index": 3,
+      "label": "1.2.2 Vestibule (4/4)"
+    },
+    {
+      "key": "1.3#0",
+      "typeId": "1.3",
+      "index": 0,
+      "label": "1.3 Classroom - 2 (1/4)"
+    },
+    {
+      "key": "1.3#1",
+      "typeId": "1.3",
+      "index": 1,
+      "label": "1.3 Classroom - 2 (2/4)"
+    },
+    {
+      "key": "1.3#2",
+      "typeId": "1.3",
+      "index": 2,
+      "label": "1.3 Classroom - 2 (3/4)"
+    },
+    {
+      "key": "1.3#3",
+      "typeId": "1.3",
+      "index": 3,
+      "label": "1.3 Classroom - 2 (4/4)"
+    },
+    {
+      "key": "1.3.1#0",
+      "typeId": "1.3.1",
+      "index": 0,
+      "label": "1.3.1 Restroom (1/4)"
+    },
+    {
+      "key": "1.3.1#1",
+      "typeId": "1.3.1",
+      "index": 1,
+      "label": "1.3.1 Restroom (2/4)"
+    },
+    {
+      "key": "1.3.1#2",
+      "typeId": "1.3.1",
+      "index": 2,
+      "label": "1.3.1 Restroom (3/4)"
+    },
+    {
+      "key": "1.3.1#3",
+      "typeId": "1.3.1",
+      "index": 3,
+      "label": "1.3.1 Restroom (4/4)"
+    },
+    {
+      "key": "1.3.2#0",
+      "typeId": "1.3.2",
+      "index": 0,
+      "label": "1.3.2 Vestibule (1/4)"
+    },
+    {
+      "key": "1.3.2#1",
+      "typeId": "1.3.2",
+      "index": 1,
+      "label": "1.3.2 Vestibule (2/4)"
+    },
+    {
+      "key": "1.3.2#2",
+      "typeId": "1.3.2",
+      "index": 2,
+      "label": "1.3.2 Vestibule (3/4)"
+    },
+    {
+      "key": "1.3.2#3",
+      "typeId": "1.3.2",
+      "index": 3,
+      "label": "1.3.2 Vestibule (4/4)"
+    },
+    {
+      "key": "1.4#0",
+      "typeId": "1.4",
+      "index": 0,
+      "label": "1.4 Classroom - 3 (1/4)"
+    },
+    {
+      "key": "1.4#1",
+      "typeId": "1.4",
+      "index": 1,
+      "label": "1.4 Classroom - 3 (2/4)"
+    },
+    {
+      "key": "1.4#2",
+      "typeId": "1.4",
+      "index": 2,
+      "label": "1.4 Classroom - 3 (3/4)"
+    },
+    {
+      "key": "1.4#3",
+      "typeId": "1.4",
+      "index": 3,
+      "label": "1.4 Classroom - 3 (4/4)"
+    },
+    {
+      "key": "1.4.1#0",
+      "typeId": "1.4.1",
+      "index": 0,
+      "label": "1.4.1 Restroom (1/4)"
+    },
+    {
+      "key": "1.4.1#1",
+      "typeId": "1.4.1",
+      "index": 1,
+      "label": "1.4.1 Restroom (2/4)"
+    },
+    {
+      "key": "1.4.1#2",
+      "typeId": "1.4.1",
+      "index": 2,
+      "label": "1.4.1 Restroom (3/4)"
+    },
+    {
+      "key": "1.4.1#3",
+      "typeId": "1.4.1",
+      "index": 3,
+      "label": "1.4.1 Restroom (4/4)"
+    },
+    {
+      "key": "1.4.2#0",
+      "typeId": "1.4.2",
+      "index": 0,
+      "label": "1.4.2 Vestibule (1/4)"
+    },
+    {
+      "key": "1.4.2#1",
+      "typeId": "1.4.2",
+      "index": 1,
+      "label": "1.4.2 Vestibule (2/4)"
+    },
+    {
+      "key": "1.4.2#2",
+      "typeId": "1.4.2",
+      "index": 2,
+      "label": "1.4.2 Vestibule (3/4)"
+    },
+    {
+      "key": "1.4.2#3",
+      "typeId": "1.4.2",
+      "index": 3,
+      "label": "1.4.2 Vestibule (4/4)"
+    },
+    {
+      "key": "1.5#0",
+      "typeId": "1.5",
+      "index": 0,
+      "label": "1.5 Classroom - 4 (1/4)"
+    },
+    {
+      "key": "1.5#1",
+      "typeId": "1.5",
+      "index": 1,
+      "label": "1.5 Classroom - 4 (2/4)"
+    },
+    {
+      "key": "1.5#2",
+      "typeId": "1.5",
+      "index": 2,
+      "label": "1.5 Classroom - 4 (3/4)"
+    },
+    {
+      "key": "1.5#3",
+      "typeId": "1.5",
+      "index": 3,
+      "label": "1.5 Classroom - 4 (4/4)"
+    },
+    {
+      "key": "1.5.1#0",
+      "typeId": "1.5.1",
+      "index": 0,
+      "label": "1.5.1 Restroom (1/4)"
+    },
+    {
+      "key": "1.5.1#1",
+      "typeId": "1.5.1",
+      "index": 1,
+      "label": "1.5.1 Restroom (2/4)"
+    },
+    {
+      "key": "1.5.1#2",
+      "typeId": "1.5.1",
+      "index": 2,
+      "label": "1.5.1 Restroom (3/4)"
+    },
+    {
+      "key": "1.5.1#3",
+      "typeId": "1.5.1",
+      "index": 3,
+      "label": "1.5.1 Restroom (4/4)"
+    },
+    {
+      "key": "1.5.2#0",
+      "typeId": "1.5.2",
+      "index": 0,
+      "label": "1.5.2 Vestibule (1/4)"
+    },
+    {
+      "key": "1.5.2#1",
+      "typeId": "1.5.2",
+      "index": 1,
+      "label": "1.5.2 Vestibule (2/4)"
+    },
+    {
+      "key": "1.5.2#2",
+      "typeId": "1.5.2",
+      "index": 2,
+      "label": "1.5.2 Vestibule (3/4)"
+    },
+    {
+      "key": "1.5.2#3",
+      "typeId": "1.5.2",
+      "index": 3,
+      "label": "1.5.2 Vestibule (4/4)"
+    },
+    {
+      "key": "2.1#0",
+      "typeId": "2.1",
+      "index": 0,
+      "label": "2.1 Art (1/1)"
+    },
+    {
+      "key": "2.1.1#0",
+      "typeId": "2.1.1",
+      "index": 0,
+      "label": "2.1.1 Storage (1/1)"
+    },
+    {
+      "key": "2.1.2#0",
+      "typeId": "2.1.2",
+      "index": 0,
+      "label": "2.1.2 Student Restroom (1/1)"
+    },
+    {
+      "key": "2.1.3#0",
+      "typeId": "2.1.3",
+      "index": 0,
+      "label": "2.1.3 Kiln (1/1)"
+    },
+    {
+      "key": "3.1#0",
+      "typeId": "3.1",
+      "index": 0,
+      "label": "3.1 Spanish/Language (1/2)"
+    },
+    {
+      "key": "3.1#1",
+      "typeId": "3.1",
+      "index": 1,
+      "label": "3.1 Spanish/Language (2/2)"
+    },
+    {
+      "key": "3.3#0",
+      "typeId": "3.3",
+      "index": 0,
+      "label": "3.3 Student Restroom (1/2)"
+    },
+    {
+      "key": "3.3#1",
+      "typeId": "3.3",
+      "index": 1,
+      "label": "3.3 Student Restroom (2/2)"
+    },
+    {
+      "key": "3.5#0",
+      "typeId": "3.5",
+      "index": 0,
+      "label": "3.5 STEAM (1/1)"
+    },
+    {
+      "key": "3.5.1#0",
+      "typeId": "3.5.1",
+      "index": 0,
+      "label": "3.5.1 Storage (1/1)"
+    },
+    {
+      "key": "3.6#0",
+      "typeId": "3.6",
+      "index": 0,
+      "label": "3.6 Makerspace (1/1)"
+    },
+    {
+      "key": "3.6.1#0",
+      "typeId": "3.6.1",
+      "index": 0,
+      "label": "3.6.1 Storage (1/1)"
+    },
+    {
+      "key": "4.1#0",
+      "typeId": "4.1",
+      "index": 0,
+      "label": "4.1 Common Area (1/5)"
+    },
+    {
+      "key": "4.1#1",
+      "typeId": "4.1",
+      "index": 1,
+      "label": "4.1 Common Area (2/5)"
+    },
+    {
+      "key": "4.1#2",
+      "typeId": "4.1",
+      "index": 2,
+      "label": "4.1 Common Area (3/5)"
+    },
+    {
+      "key": "4.1#3",
+      "typeId": "4.1",
+      "index": 3,
+      "label": "4.1 Common Area (4/5)"
+    },
+    {
+      "key": "4.1#4",
+      "typeId": "4.1",
+      "index": 4,
+      "label": "4.1 Common Area (5/5)"
+    },
+    {
+      "key": "4.2#0",
+      "typeId": "4.2",
+      "index": 0,
+      "label": "4.2 Grade Level Storage (1/5)"
+    },
+    {
+      "key": "4.2#1",
+      "typeId": "4.2",
+      "index": 1,
+      "label": "4.2 Grade Level Storage (2/5)"
+    },
+    {
+      "key": "4.2#2",
+      "typeId": "4.2",
+      "index": 2,
+      "label": "4.2 Grade Level Storage (3/5)"
+    },
+    {
+      "key": "4.2#3",
+      "typeId": "4.2",
+      "index": 3,
+      "label": "4.2 Grade Level Storage (4/5)"
+    },
+    {
+      "key": "4.2#4",
+      "typeId": "4.2",
+      "index": 4,
+      "label": "4.2 Grade Level Storage (5/5)"
+    },
+    {
+      "key": "4.3#0",
+      "typeId": "4.3",
+      "index": 0,
+      "label": "4.3 Teacher Planning/Workroom (1/5)"
+    },
+    {
+      "key": "4.3#1",
+      "typeId": "4.3",
+      "index": 1,
+      "label": "4.3 Teacher Planning/Workroom (2/5)"
+    },
+    {
+      "key": "4.3#2",
+      "typeId": "4.3",
+      "index": 2,
+      "label": "4.3 Teacher Planning/Workroom (3/5)"
+    },
+    {
+      "key": "4.3#3",
+      "typeId": "4.3",
+      "index": 3,
+      "label": "4.3 Teacher Planning/Workroom (4/5)"
+    },
+    {
+      "key": "4.3#4",
+      "typeId": "4.3",
+      "index": 4,
+      "label": "4.3 Teacher Planning/Workroom (5/5)"
+    },
+    {
+      "key": "4.5#0",
+      "typeId": "4.5",
+      "index": 0,
+      "label": "4.5 Multipurpose Room (1/1)"
+    },
+    {
+      "key": "5.1#0",
+      "typeId": "5.1",
+      "index": 0,
+      "label": "5.1 Music (1/1)"
+    },
+    {
+      "key": "5.1.1#0",
+      "typeId": "5.1.1",
+      "index": 0,
+      "label": "5.1.1 Storage (1/1)"
+    },
+    {
+      "key": "5.1.2#0",
+      "typeId": "5.1.2",
+      "index": 0,
+      "label": "5.1.2 Student Restroom (1/1)"
+    },
+    {
+      "key": "6.1#0",
+      "typeId": "6.1",
+      "index": 0,
+      "label": "6.1 Mini-Gym (1/1)"
+    },
+    {
+      "key": "6.1.1#0",
+      "typeId": "6.1.1",
+      "index": 0,
+      "label": "6.1.1 Storage (1/1)"
+    },
+    {
+      "key": "6.1.2#0",
+      "typeId": "6.1.2",
+      "index": 0,
+      "label": "6.1.2 Office (1/4)"
+    },
+    {
+      "key": "6.1.2#1",
+      "typeId": "6.1.2",
+      "index": 1,
+      "label": "6.1.2 Office (2/4)"
+    },
+    {
+      "key": "6.1.2#2",
+      "typeId": "6.1.2",
+      "index": 2,
+      "label": "6.1.2 Office (3/4)"
+    },
+    {
+      "key": "6.1.2#3",
+      "typeId": "6.1.2",
+      "index": 3,
+      "label": "6.1.2 Office (4/4)"
+    },
+    {
+      "key": "6.1.3#0",
+      "typeId": "6.1.3",
+      "index": 0,
+      "label": "6.1.3 Storage - Aux Programs (1/1)"
+    },
+    {
+      "key": "7.1#0",
+      "typeId": "7.1",
+      "index": 0,
+      "label": "7.1 General Admin Reception (1/1)"
+    },
+    {
+      "key": "7.1.1#0",
+      "typeId": "7.1.1",
+      "index": 0,
+      "label": "7.1.1 Administrative Storage (1/1)"
+    },
+    {
+      "key": "7.2#0",
+      "typeId": "7.2",
+      "index": 0,
+      "label": "7.2 LS Head (1/1)"
+    },
+    {
+      "key": "7.3#0",
+      "typeId": "7.3",
+      "index": 0,
+      "label": "7.3 Office (1/4)"
+    },
+    {
+      "key": "7.3#1",
+      "typeId": "7.3",
+      "index": 1,
+      "label": "7.3 Office (2/4)"
+    },
+    {
+      "key": "7.3#2",
+      "typeId": "7.3",
+      "index": 2,
+      "label": "7.3 Office (3/4)"
+    },
+    {
+      "key": "7.3#3",
+      "typeId": "7.3",
+      "index": 3,
+      "label": "7.3 Office (4/4)"
+    },
+    {
+      "key": "7.4#0",
+      "typeId": "7.4",
+      "index": 0,
+      "label": "7.4 Conference Room (1/1)"
+    },
+    {
+      "key": "7.5#0",
+      "typeId": "7.5",
+      "index": 0,
+      "label": "7.5 LS Counselor (1/2)"
+    },
+    {
+      "key": "7.5#1",
+      "typeId": "7.5",
+      "index": 1,
+      "label": "7.5 LS Counselor (2/2)"
+    },
+    {
+      "key": "7.5.1#0",
+      "typeId": "7.5.1",
+      "index": 0,
+      "label": "7.5.1 Resource (1/1)"
+    },
+    {
+      "key": "7.6#0",
+      "typeId": "7.6",
+      "index": 0,
+      "label": "7.6 Curriculum room (1/1)"
+    },
+    {
+      "key": "7.7#0",
+      "typeId": "7.7",
+      "index": 0,
+      "label": "7.7 Staff Restroom (1/2)"
+    },
+    {
+      "key": "7.7#1",
+      "typeId": "7.7",
+      "index": 1,
+      "label": "7.7 Staff Restroom (2/2)"
+    },
+    {
+      "key": "7.8#0",
+      "typeId": "7.8",
+      "index": 0,
+      "label": "7.8 Workroom/Break (1/1)"
+    },
+    {
+      "key": "7.8.1#0",
+      "typeId": "7.8.1",
+      "index": 0,
+      "label": "7.8.1 Wellness Room (1/1)"
+    },
+    {
+      "key": "7.9#0",
+      "typeId": "7.9",
+      "index": 0,
+      "label": "7.9 Clinic (1/1)"
+    },
+    {
+      "key": "7.9.1#0",
+      "typeId": "7.9.1",
+      "index": 0,
+      "label": "7.9.1 Student Restroom (1/1)"
+    },
+    {
+      "key": "7.9.2#0",
+      "typeId": "7.9.2",
+      "index": 0,
+      "label": "7.9.2 Security Office (1/1)"
+    },
+    {
+      "key": "7.10#0",
+      "typeId": "7.10",
+      "index": 0,
+      "label": "7.10 CAE Workroom/Shared Resource (1/1)"
+    },
+    {
+      "key": "7.10.1#0",
+      "typeId": "7.10.1",
+      "index": 0,
+      "label": "7.10.1 Office (1/3)"
+    },
+    {
+      "key": "7.10.1#1",
+      "typeId": "7.10.1",
+      "index": 1,
+      "label": "7.10.1 Office (2/3)"
+    },
+    {
+      "key": "7.10.1#2",
+      "typeId": "7.10.1",
+      "index": 2,
+      "label": "7.10.1 Office (3/3)"
+    },
+    {
+      "key": "7.11.1#0",
+      "typeId": "7.11.1",
+      "index": 0,
+      "label": "7.11.1 Tutoring (1/6)"
+    },
+    {
+      "key": "7.11.1#1",
+      "typeId": "7.11.1",
+      "index": 1,
+      "label": "7.11.1 Tutoring (2/6)"
+    },
+    {
+      "key": "7.11.1#2",
+      "typeId": "7.11.1",
+      "index": 2,
+      "label": "7.11.1 Tutoring (3/6)"
+    },
+    {
+      "key": "7.11.1#3",
+      "typeId": "7.11.1",
+      "index": 3,
+      "label": "7.11.1 Tutoring (4/6)"
+    },
+    {
+      "key": "7.11.1#4",
+      "typeId": "7.11.1",
+      "index": 4,
+      "label": "7.11.1 Tutoring (5/6)"
+    },
+    {
+      "key": "7.11.1#5",
+      "typeId": "7.11.1",
+      "index": 5,
+      "label": "7.11.1 Tutoring (6/6)"
+    },
+    {
+      "key": "7.12#0",
+      "typeId": "7.12",
+      "index": 0,
+      "label": "7.12 Speech (1/2)"
+    },
+    {
+      "key": "7.12#1",
+      "typeId": "7.12",
+      "index": 1,
+      "label": "7.12 Speech (2/2)"
+    },
+    {
+      "key": "7.13#0",
+      "typeId": "7.13",
+      "index": 0,
+      "label": "7.13 OT (1/1)"
+    },
+    {
+      "key": "7.13.1#0",
+      "typeId": "7.13.1",
+      "index": 0,
+      "label": "7.13.1 Storage (1/1)"
+    },
+    {
+      "key": "7.13.2#0",
+      "typeId": "7.13.2",
+      "index": 0,
+      "label": "7.13.2 Student Restroom (1/1)"
+    },
+    {
+      "key": "7.14#0",
+      "typeId": "7.14",
+      "index": 0,
+      "label": "7.14 Reading Specialist (1/1)"
+    },
+    {
+      "key": "8.1#0",
+      "typeId": "8.1",
+      "index": 0,
+      "label": "8.1 Custodial Closet (1/4)"
+    },
+    {
+      "key": "8.1#1",
+      "typeId": "8.1",
+      "index": 1,
+      "label": "8.1 Custodial Closet (2/4)"
+    },
+    {
+      "key": "8.1#2",
+      "typeId": "8.1",
+      "index": 2,
+      "label": "8.1 Custodial Closet (3/4)"
+    },
+    {
+      "key": "8.1#3",
+      "typeId": "8.1",
+      "index": 3,
+      "label": "8.1 Custodial Closet (4/4)"
+    },
+    {
+      "key": "8.2#0",
+      "typeId": "8.2",
+      "index": 0,
+      "label": "8.2 Staff Restroom (1/4)"
+    },
+    {
+      "key": "8.2#1",
+      "typeId": "8.2",
+      "index": 1,
+      "label": "8.2 Staff Restroom (2/4)"
+    },
+    {
+      "key": "8.2#2",
+      "typeId": "8.2",
+      "index": 2,
+      "label": "8.2 Staff Restroom (3/4)"
+    },
+    {
+      "key": "8.2#3",
+      "typeId": "8.2",
+      "index": 3,
+      "label": "8.2 Staff Restroom (4/4)"
+    },
+    {
+      "key": "8.3#0",
+      "typeId": "8.3",
+      "index": 0,
+      "label": "8.3 Student Restroom (1/2)"
+    },
+    {
+      "key": "8.3#1",
+      "typeId": "8.3",
+      "index": 1,
+      "label": "8.3 Student Restroom (2/2)"
+    },
+    {
+      "key": "8.4#0",
+      "typeId": "8.4",
+      "index": 0,
+      "label": "8.4 Custodial Hub (1/1)"
+    },
+    {
+      "key": "8.5#0",
+      "typeId": "8.5",
+      "index": 0,
+      "label": "8.5 Building Maintenance Storage (1/2)"
+    },
+    {
+      "key": "8.5#1",
+      "typeId": "8.5",
+      "index": 1,
+      "label": "8.5 Building Maintenance Storage (2/2)"
+    },
+    {
+      "key": "9.1#0",
+      "typeId": "9.1",
+      "index": 0,
+      "label": "9.1 Open Stack (1/1)"
+    },
+    {
+      "key": "9.1.1#0",
+      "typeId": "9.1.1",
+      "index": 0,
+      "label": "9.1.1 Office (1/1)"
+    },
+    {
+      "key": "9.1.2#0",
+      "typeId": "9.1.2",
+      "index": 0,
+      "label": "9.1.2 Tech Processing (1/1)"
+    },
+    {
+      "key": "9.1.3#0",
+      "typeId": "9.1.3",
+      "index": 0,
+      "label": "9.1.3 Storage (1/1)"
+    },
+    {
+      "key": "9.1.4#0",
+      "typeId": "9.1.4",
+      "index": 0,
+      "label": "9.1.4 Student Restroom (1/1)"
+    }
+  ],
+  "edges": [
+    {
+      "fromKey": "1.1#0",
+      "toKey": "1.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.1#1",
+      "toKey": "1.2#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.1#2",
+      "toKey": "1.2#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.1#3",
+      "toKey": "1.2#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.1.1#0",
+      "toKey": "1.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.1.1#1",
+      "toKey": "1.1#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.1.1#2",
+      "toKey": "1.1#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.1.1#3",
+      "toKey": "1.1#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.1.2#0",
+      "toKey": "1.1.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.1.2#1",
+      "toKey": "1.1.1#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.1.2#2",
+      "toKey": "1.1.1#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.1.2#3",
+      "toKey": "1.1.1#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2#0",
+      "toKey": "1.3#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.2#1",
+      "toKey": "1.3#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.2#2",
+      "toKey": "1.3#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.2#3",
+      "toKey": "1.3#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.2.1#0",
+      "toKey": "1.2#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2.1#1",
+      "toKey": "1.2#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2.1#2",
+      "toKey": "1.2#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2.1#3",
+      "toKey": "1.2#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2.2#0",
+      "toKey": "1.2.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2.2#1",
+      "toKey": "1.2.1#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2.2#2",
+      "toKey": "1.2.1#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.2.2#3",
+      "toKey": "1.2.1#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3#0",
+      "toKey": "1.4#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.3#1",
+      "toKey": "1.4#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.3#2",
+      "toKey": "1.4#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.3#3",
+      "toKey": "1.4#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.3.1#0",
+      "toKey": "1.3#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3.1#1",
+      "toKey": "1.3#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3.1#2",
+      "toKey": "1.3#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3.1#3",
+      "toKey": "1.3#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3.2#0",
+      "toKey": "1.3.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3.2#1",
+      "toKey": "1.3.1#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3.2#2",
+      "toKey": "1.3.1#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.3.2#3",
+      "toKey": "1.3.1#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4#0",
+      "toKey": "1.5#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.4#1",
+      "toKey": "1.5#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.4#2",
+      "toKey": "1.5#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.4#3",
+      "toKey": "1.5#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.4.1#0",
+      "toKey": "1.4#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4.1#1",
+      "toKey": "1.4#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4.1#2",
+      "toKey": "1.4#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4.1#3",
+      "toKey": "1.4#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4.2#0",
+      "toKey": "1.4.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4.2#1",
+      "toKey": "1.4.1#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4.2#2",
+      "toKey": "1.4.1#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.4.2#3",
+      "toKey": "1.4.1#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5#0",
+      "toKey": "1.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.5#1",
+      "toKey": "1.1#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.5#2",
+      "toKey": "1.1#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.5#3",
+      "toKey": "1.1#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "1.5.1#0",
+      "toKey": "1.5#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5.1#1",
+      "toKey": "1.5#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5.1#2",
+      "toKey": "1.5#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5.1#3",
+      "toKey": "1.5#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5.2#0",
+      "toKey": "1.5.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5.2#1",
+      "toKey": "1.5.1#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5.2#2",
+      "toKey": "1.5.1#2",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "1.5.2#3",
+      "toKey": "1.5.1#3",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "2.1#0",
+      "toKey": "1.4#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "2.1.1#0",
+      "toKey": "2.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "2.1.2#0",
+      "toKey": "2.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "2.1.3#0",
+      "toKey": "2.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "3.1#0",
+      "toKey": "1.5#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "3.1#1",
+      "toKey": "1.5#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "3.3#0",
+      "toKey": "3.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "3.3#1",
+      "toKey": "3.1#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "3.5#0",
+      "toKey": "1.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "3.5.1#0",
+      "toKey": "3.5#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "3.6#0",
+      "toKey": "1.5#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "3.6.1#0",
+      "toKey": "3.6#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "4.1#0",
+      "toKey": "1.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.1#1",
+      "toKey": "1.1#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.1#2",
+      "toKey": "1.1#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.1#3",
+      "toKey": "1.1#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.1#4",
+      "toKey": "1.1#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.2#0",
+      "toKey": "1.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.2#1",
+      "toKey": "1.2#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.2#2",
+      "toKey": "1.2#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.2#3",
+      "toKey": "1.2#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.2#4",
+      "toKey": "1.2#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.3#0",
+      "toKey": "1.3#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.3#1",
+      "toKey": "1.3#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.3#2",
+      "toKey": "1.3#2",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.3#3",
+      "toKey": "1.3#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.3#4",
+      "toKey": "1.3#3",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "4.5#0",
+      "toKey": "4.3#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "5.1#0",
+      "toKey": "1.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "5.1.1#0",
+      "toKey": "5.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "5.1.2#0",
+      "toKey": "5.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "6.1#0",
+      "toKey": "4.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "6.1.1#0",
+      "toKey": "6.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "6.1.2#0",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "6.1.2#1",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "6.1.2#2",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "6.1.2#3",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "6.1.3#0",
+      "toKey": "6.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "7.1#0",
+      "toKey": "4.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.1.1#0",
+      "toKey": "7.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.2#0",
+      "toKey": "7.3#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.3#0",
+      "toKey": "7.4#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.3#1",
+      "toKey": "7.4#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.3#2",
+      "toKey": "7.4#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.3#3",
+      "toKey": "7.4#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.4#0",
+      "toKey": "7.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.5#0",
+      "toKey": "7.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.5#1",
+      "toKey": "7.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.5.1#0",
+      "toKey": "7.5#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "7.6#0",
+      "toKey": "4.3#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.7#0",
+      "toKey": "7.6#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.7#1",
+      "toKey": "7.6#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.8#0",
+      "toKey": "7.7#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.8.1#0",
+      "toKey": "7.8#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.9#0",
+      "toKey": "1.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.9.1#0",
+      "toKey": "7.9#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "7.9.2#0",
+      "toKey": "7.9#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.10#0",
+      "toKey": "1.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.10.1#0",
+      "toKey": "7.10#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.10.1#1",
+      "toKey": "7.10#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.10.1#2",
+      "toKey": "7.10#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.12#0",
+      "toKey": "1.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.12#1",
+      "toKey": "1.1#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.13#0",
+      "toKey": "1.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.13.1#0",
+      "toKey": "7.13#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "7.13.2#0",
+      "toKey": "7.13#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "7.14#0",
+      "toKey": "1.2#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.1#0",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.1#1",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.1#2",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.1#3",
+      "toKey": "6.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.2#0",
+      "toKey": "7.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.2#1",
+      "toKey": "7.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.2#2",
+      "toKey": "7.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.2#3",
+      "toKey": "7.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.3#0",
+      "toKey": "4.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.3#1",
+      "toKey": "4.1#1",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.4#0",
+      "toKey": "8.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "8.5#0",
+      "toKey": "8.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "8.5#1",
+      "toKey": "8.1#1",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "9.1#0",
+      "toKey": "4.1#0",
+      "kind": "adjacent"
+    },
+    {
+      "fromKey": "9.1.1#0",
+      "toKey": "9.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "9.1.2#0",
+      "toKey": "9.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "9.1.3#0",
+      "toKey": "9.1#0",
+      "kind": "sharedWall"
+    },
+    {
+      "fromKey": "9.1.4#0",
+      "toKey": "9.1#0",
+      "kind": "sharedWall"
+    }
+  ],
+  "diagnostics": [
+    {
+      "code": "W008",
+      "severity": "warning",
+      "message": "Color RGB (column L) reads '255, 255, 255' on all 72 rows and does not match the Color fills. It looks stale; colors were taken from the Color column fill.",
+      "sheet": "ProgramInfo",
+      "row": null,
+      "column": "L",
+      "typeId": null
+    },
+    {
+      "code": "I001",
+      "severity": "info",
+      "message": "Row 2: Conn. Primary links form a loop: 1.1 → 1.2 → 1.3 → 1.4 → 1.5 → 1.1.",
+      "sheet": "ProgramInfo",
+      "row": 2,
+      "column": "I",
+      "typeId": "1.1"
+    },
+    {
+      "code": "W002",
+      "severity": "warning",
+      "message": "Row 24: 3.2 Block Room has Qty 0, so it is treated as absorbed into other spaces and gets no rooms.",
+      "sheet": "ProgramInfo",
+      "row": 24,
+      "column": "C",
+      "typeId": "3.2"
+    },
+    {
+      "code": "W002",
+      "severity": "warning",
+      "message": "Row 26: 3.4 Life Skills has Qty 0, so it is treated as absorbed into other spaces and gets no rooms.",
+      "sheet": "ProgramInfo",
+      "row": 26,
+      "column": "C",
+      "typeId": "3.4"
+    },
+    {
+      "code": "W002",
+      "severity": "warning",
+      "message": "Row 35: 4.4 Community Collab has Qty 0, so it is treated as absorbed into other spaces and gets no rooms.",
+      "sheet": "ProgramInfo",
+      "row": 35,
+      "column": "C",
+      "typeId": "4.4"
+    },
+    {
+      "code": "W005",
+      "severity": "warning",
+      "message": "Row 44: 6.1.2 Office has Qty 4, more than its parent 6.1 Mini-Gym (Qty 1).",
+      "sheet": "ProgramInfo",
+      "row": 44,
+      "column": "C",
+      "typeId": "6.1.2"
+    },
+    {
+      "code": "W001",
+      "severity": "warning",
+      "message": "Row 47: 7.1 General Admin Reception: Qty × Net SF = 1 × 17 = 17, but Total Program SF is 298. Rooms use the Net SF (17 SF each).",
+      "sheet": "ProgramInfo",
+      "row": 47,
+      "column": "E",
+      "typeId": "7.1"
+    },
+    {
+      "code": "W004",
+      "severity": "info",
+      "message": "Row 61: Dept No is stored as the number 7.1; read as '7.10' from its number format. Consider typing it as text ('7.10).",
+      "sheet": "ProgramInfo",
+      "row": 61,
+      "column": "A",
+      "typeId": null
+    },
+    {
+      "code": "W005",
+      "severity": "warning",
+      "message": "Row 62: 7.10.1 Office has Qty 3, more than its parent 7.10 CAE Workroom/Shared Resource (Qty 1).",
+      "sheet": "ProgramInfo",
+      "row": 62,
+      "column": "C",
+      "typeId": "7.10.1"
+    },
+    {
+      "code": "W004",
+      "severity": "info",
+      "message": "Row 62: Conn. Primary is stored as the number 7.1; read as '7.10' from its number format. Consider typing it as text ('7.10).",
+      "sheet": "ProgramInfo",
+      "row": 62,
+      "column": "I",
+      "typeId": null
+    },
+    {
+      "code": "W002",
+      "severity": "warning",
+      "message": "Row 63: 7.11 Homework Lab has Qty 0, so it is treated as absorbed into other spaces and gets no rooms.",
+      "sheet": "ProgramInfo",
+      "row": 63,
+      "column": "C",
+      "typeId": "7.11"
+    },
+    {
+      "code": "W005",
+      "severity": "warning",
+      "message": "Row 64: 7.11.1 Tutoring has Qty 6, more than its parent 7.11 Homework Lab (Qty 0).",
+      "sheet": "ProgramInfo",
+      "row": 64,
+      "column": "C",
+      "typeId": "7.11.1"
+    },
+    {
+      "code": "W003",
+      "severity": "warning",
+      "message": "Row 64: 7.11.1 Tutoring connects to 7.11 Homework Lab, which has Qty 0 (absorbed). Its 6 room(s) get no adjacency.",
+      "sheet": "ProgramInfo",
+      "row": 64,
+      "column": "I",
+      "typeId": "7.11.1"
+    },
+    {
+      "code": "I003",
+      "severity": "info",
+      "message": "Department 8 is listed more than once on ProjectSheet; using row 122 'Custodial/Building Support', which lists its rooms. Also found: row 105 'Dining/Student Services'.",
+      "sheet": "ProjectSheet",
+      "row": 122,
+      "column": "A",
+      "typeId": null
+    }
+  ],
+  "summary": {
+    "rowsRead": 81,
+    "roomTypes": 72,
+    "absorbedRoomTypes": 4,
+    "instances": 151,
+    "edges": 145,
+    "sharedWallEdges": 58,
+    "dividerRowsSkipped": 9,
+    "departmentHeaderRows": 0,
+    "blankRowsSkipped": 0,
+    "invalidRowsSkipped": 0,
+    "unresolvedRoomTypes": 1,
+    "edgesSkipped": 6,
+    "totalNetSf": 48092,
+    "floorPreferences": [
+      {
+        "floor": null,
+        "rooms": 83,
+        "netSf": 26805
+      },
+      {
+        "floor": 1,
+        "rooms": 68,
+        "netSf": 21287
+      }
+    ]
+  },
+  "programHash": "sha256:c3e84863e56292b3d2ca3889f39ce079e0d7dec80503b9e9371f5b7ec4888b2f"
+}
