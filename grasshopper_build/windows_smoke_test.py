@@ -21,7 +21,7 @@ for path in sorted((root / "python_files").glob("*.py")):
     compile(path.read_text(encoding="utf-8-sig"), str(path), "exec")
 report["component_syntax"] = "All six scripts passed"
 inputs = {
-    "xlsx_path": str(root / "Program_ExcelToGrasshopper_Test.xlsm"),
+    "xlsx_path": str(root.parent / "Program_ExcelToGrasshopper_Test.xlsm"),
     "sheet_name": "Sheet2", "run": True,
 }
 wb = openpyxl.load_workbook(inputs["xlsx_path"], data_only=True, read_only=True)
@@ -46,7 +46,7 @@ report["unique_uids"] = len(set(inputs["uid"]))
 report["total_area_sf"] = sum(inputs["area"])
 report["reader_passed"] = bool(inputs["uid"]) and len(set(inputs["uid"])) == len(inputs["uid"])
 report["workbook_headers"] = {}
-for workbook_path in root.glob("Program_*.xls*"):
+for workbook_path in root.parent.glob("Program_*.xls*"):
     book = openpyxl.load_workbook(str(workbook_path), data_only=True, read_only=True)
     sheets = {}
     for sheet in book.worksheets:

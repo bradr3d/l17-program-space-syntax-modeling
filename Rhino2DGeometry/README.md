@@ -5,7 +5,7 @@ Rhino 8 plug-in (`net7.0-windows`) with two commands:
 - `ExcelToBubbleDiagram` — reads a program workbook, sizes bubbles from net SF, and relaxes a constrained bubble diagram with Kangaroo2.
 - `Generate2DFloorplan` — converts selected metadata-tagged bubble circles into 2D room walls, corridor ribbons, wall openings, door leaves, and swing arcs.
 
-`ExcelToBubbleDiagram` ports the Grasshopper definition in `ExcelToBubbleDiagram.ghx`. `Generate2DFloorplan` ports Components 03–06 of the Excel → Grasshopper pipeline. Bubble positions come from Rhino circles; room metadata comes from object user text.
+`ExcelToBubbleDiagram` ports the archived Grasshopper definition in `../grasshopper_build/ExcelToBubbleDiagram.ghx`. `Generate2DFloorplan` ports Components 03–06 of the Excel → Grasshopper pipeline. Bubble positions come from Rhino circles; room metadata comes from object user text. Shared Excel workbooks remain in the project root, one folder above this guide.
 
 ## Build and load
 

@@ -1,4 +1,4 @@
-[xml]$doc = Get-Content -LiteralPath "C:\Users\Kevin\Documents\Senior Design\Week 1 Build\ExcelToBubbleDiagram.ghx" -Encoding UTF8
+[xml]$doc = Get-Content -LiteralPath (Join-Path $PSScriptRoot "ExcelToBubbleDiagram.ghx") -Encoding UTF8
 $ns = @{ gh = "" }
 $objects = @()
 $params = @{}
@@ -104,5 +104,5 @@ foreach ($o in ($objects | Where-Object { $_.type_name -ne 'Group' })) {
     if (-not $o.nickname -and -not $o.panel_text) { continue }
     Write-Output "$($o.type_name) | $($o.nickname) | $($o.type_guid) | $($o.instance_guid)"
 }
-$objects | ConvertTo-Json -Depth 8 | Out-File "C:\Users\Kevin\Documents\Senior Design\Week 1 Build\_ghx_objects.json" -Encoding utf8
-$wires | ConvertTo-Json | Out-File "C:\Users\Kevin\Documents\Senior Design\Week 1 Build\_ghx_wires.json" -Encoding utf8
+$objects | ConvertTo-Json -Depth 8 | Out-File (Join-Path $PSScriptRoot "_ghx_objects.json") -Encoding utf8
+$wires | ConvertTo-Json | Out-File (Join-Path $PSScriptRoot "_ghx_wires.json") -Encoding utf8

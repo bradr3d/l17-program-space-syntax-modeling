@@ -2,8 +2,9 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict
 import json
 import re
+from pathlib import Path
 
-path = r"C:\Users\Kevin\Documents\Senior Design\Week 1 Build\ExcelToBubbleDiagram.ghx"
+path = (Path(__file__).resolve().parent / "ExcelToBubbleDiagram.ghx")
 tree = ET.parse(path)
 root = tree.getroot()
 
@@ -250,7 +251,7 @@ for src, tgt in wires[:500]:
     out["wires_sample"].append({"from": guid_label.get(src, src), "from_guid": src, "to": guid_label.get(tgt, tgt), "to_guid": tgt})
 out["wire_count"] = len(wires)
 
-with open(r"C:\Users\Kevin\Documents\Senior Design\Week 1 Build\_ghx_parse_out.json", "w", encoding="utf-8") as f:
+with open((Path(__file__).resolve().parent / "_ghx_parse_out.json"), "w", encoding="utf-8") as f:
     json.dump(out, f, indent=2)
 
 print("Object count:", len(objects))

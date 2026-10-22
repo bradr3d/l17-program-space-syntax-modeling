@@ -17,7 +17,7 @@ The six supplied components require no additional external Python packages. A se
 1. Open Rhino and run `Grasshopper`.
 2. Open the intended `.gh` definition. The folder contains both `ExcelToBubbleDiagram.gh` and `Space Syntax Modeling_0.3.gh`; their embedded scripts/wiring have not been verified against the loose Python sources.
 3. Component 01 must use Python 3 and retain `# r: openpyxl` on line 2.
-4. Set `xlsx_path` to `C:\Users\Kevin\Documents\Senior Design\Treadway Build\Program_ExcelToGrasshopper_Test.xlsm`.
+4. Set `xlsx_path` to `C:\Users\Kevin\Documents\Senior Design\Week 1 Build\Program_ExcelToGrasshopper_Test.xlsm`.
 5. Set `sheet_name` to `ProgramInfo`, `header_row` to `1`, and `run` to `True`. The handoff's `Sheet2` does not exist in either supplied workbook.
 6. Use the input access/type settings documented at the top of each component script. Tree inputs require Tree access.
 
@@ -34,7 +34,7 @@ Do not save the macro workbook through openpyxl: the handoff warns that this can
 Run `StartScriptServer` in Rhino, then use PowerShell:
 
 ```powershell
-& 'C:\Program Files\Rhino 8\System\RhinoCode.exe' script 'C:\Users\Kevin\Documents\Senior Design\Treadway Build\windows_smoke_test.py'
+& 'C:\Program Files\Rhino 8\System\RhinoCode.exe' script 'C:\Users\Kevin\Documents\Senior Design\Week 1 Build\grasshopper_build\windows_smoke_test.py'
 ```
 
 The script imports the runtime dependencies, compiles the component sources, and reads both workbooks without saving them. It writes `windows_smoke_test_results.json` and raises an error if the reader returns no rooms. It does not validate final geometry or Grasshopper canvas wiring.
