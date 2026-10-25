@@ -21,7 +21,9 @@ using System.Linq;
 
 namespace BubbleSolver
 {
-    /// <summary>One room instance going into the bubble solver.</summary>
+    /// <summary>
+    /// One room instance going into the bubble solver.
+    /// </summary>
     public sealed class RoomInput
     {
         public string Uid { get; init; } = "";
@@ -31,21 +33,25 @@ namespace BubbleSolver
         public int Dept { get; init; } = -1;
     }
 
-    /// <summary>A directed adjacency preference: Source should be near Target.</summary>
+    /// <summary>
+    /// A directed adjacency preference: Source should be near Target.
+    /// </summary>
     public readonly record struct AdjacencyEdge(string Source, string Target);
 
     public enum LinearUnit { Feet, Meters }
 
-    /// <summary>Tunable solver parameters -- the natural candidates for UI sliders.</summary>
+    /// <summary>
+    /// Tunable solver parameters -- the natural candidates for UI sliders.
+    /// </summary>
     public sealed class BubbleSolverConfig
     {
         public LinearUnit UnitSystem { get; init; } = LinearUnit.Feet;
         public int Iterations { get; init; } = 400;
         public int DeoverlapIterations { get; init; } = 120;
-        public double KAdjacency { get; init; } = 0.08;   // spring stiffness
-        public double KRepel { get; init; } = 0.85;        // overlap repulsion stiffness
-        public double KFloorCohesion { get; init; } = 0.015; // pull to floor centroid
-        public double Padding { get; init; } = 2.0;         // min gap between bubble edges (input units)
+        public double KAdjacency { get; init; } = 0.08;       // spring stiffness
+        public double KRepel { get; init; } = 0.85;           // overlap repulsion stiffness
+        public double KFloorCohesion { get; init; } = 0.015;  // pull to floor centroid
+        public double Padding { get; init; } = 2.0;           // min gap between bubble edges (input units)
         public int Seed { get; init; } = 42;
         public double OverlapTolerance { get; init; } = 0.01; // input units of slop
     }
@@ -84,6 +90,24 @@ namespace BubbleSolver
         public IEnumerable<BubbleResult> OnFloor(int floor) => Rooms.Where(r => r.Floor == floor);
     }
 
+    public enum SolverPhase
+    {
+        Initial,
+        Relax,
+        Deoverlap,
+        Final
+    }
+
+    /// <summary>
+    /// Snapshot of the solver mid-run
+    /// </summary>
+    public sealed class BubbleFrame
+    {
+        public SolverPhase Phase { get; init; }
+        public int Iteration { get; init; }
+        public List<BubbleResult> Rooms { get; init; } = new();
+    }
+
     public static class BubbleSolver
     {
         /// <summary>
@@ -95,8 +119,9 @@ namespace BubbleSolver
         public static BubbleSolverResult Solve(
             IReadOnlyList<RoomInput> rooms,
             IReadOnlyList<AdjacencyEdge> edges,
-            BubbleSolverConfig? config = null)
-        {
+            BubbleSolverConfig? config = null,
+            Action<BubbleFrame>? onFrame = null
+        ) {
             config ??= new BubbleSolverConfig();
 
             int n = rooms.Count;
@@ -113,38 +138,45 @@ namespace BubbleSolver
             double pad = config.Padding * linScale;
 
             // ---- per-room arrays ------------------------------------------------
-            var uid = rooms.Select(r => r.Uid).ToArray();
-            var radius = rooms.Select(r => AreaToRadius(r.Area, linScale)).ToArray();
-            var floor = rooms.Select(r => r.Floor).ToArray();
-            var label = rooms.Select(r => r.Label).ToArray();
-            var dept = rooms.Select(r => r.Dept).ToArray();
+            string[] uid = rooms.Select(r => r.Uid).ToArray();
+            double[] radius = rooms.Select(r => AreaToRadius(r.Area, linScale)).ToArray();
+            int[] floor = rooms.Select(r => r.Floor).ToArray();
+            string[] label = rooms.Select(r => r.Label).ToArray();
+            int[] dept = rooms.Select(r => r.Dept).ToArray();
 
-            var idxOf = new Dictionary<string, int>(n);
-            for (int i = 0; i < n; i++) idxOf[uid[i]] = i;
+            Dictionary<string, int> idxOf = new(n);
+            for (int i = 0; i < n; i++)
+            {
+                idxOf[uid[i]] = i;
+            }
 
-            var floors = floor.Distinct().OrderBy(f => f).ToArray();
-            var membersOf = floors.ToDictionary(
+            int[] floors = floor.Distinct().OrderBy(f => f).ToArray();
+            Dictionary<int, int[]> membersOf = floors.ToDictionary(
                 f => f,
                 f => Enumerable.Range(0, n).Where(i => floor[i] == f).ToArray());
 
             // ---- resolve adjacency edges to index pairs, skipping unknown uids -
-            var edgePairs = new List<(int a, int b)>();
-            foreach (var e in edges)
+            List<(int a, int b)> edgePairs = new();
+            foreach (AdjacencyEdge e in edges)
             {
                 if (idxOf.TryGetValue(e.Source, out int a) && idxOf.TryGetValue(e.Target, out int b))
+                {
                     edgePairs.Add((a, b));
+                }
             }
 
             // ---- initial placement: random ring per floor -----------------------
-            var rng = new Random(config.Seed);
-            var px = new double[n];
-            var py = new double[n];
-            foreach (var f in floors)
+            Random rng = new(config.Seed);
+            double[] px = new double[n];
+            double[] py = new double[n];
+
+            foreach (int f in floors)
             {
-                var members = membersOf[f];
+                int[] members = membersOf[f];
                 double totalArea = members.Sum(i => Math.PI * radius[i] * radius[i]);
                 double ringRadius = Math.Sqrt(totalArea / Math.PI) * 1.3 + 1.0;
-                foreach (var i in members)
+
+                foreach (int i in members)
                 {
                     double ang = rng.NextDouble() * 2 * Math.PI;
                     double rr = rng.NextDouble() * ringRadius;
@@ -153,13 +185,55 @@ namespace BubbleSolver
                 }
             }
 
-            // Step clamp: a bubble can't move more than half the smallest radius
-            // in one iteration -- prevents overshoot that leaves frozen overlap.
+            // Step clamp: a bubble can't move more than half the smallest radius in one iteration.
+            // This prevents overshoot that leaves a frozen overlap.
             double maxStep = 0.5 * radius.Min();
 
+            // Snapshot for onFrame, re-cented on every floor just like the final result
+            void Emit(SolverPhase phase, int iteration)
+            {
+                if (onFrame is null)
+                {
+                    return;
+                }
+
+                List<BubbleResult> snap = new(n);
+
+                foreach (int f in floors)
+                {
+                    int[] members = membersOf[f];
+                    double cx = members.Average(i => px[i]);
+                    double cy = members.Average(i => py[i]);
+
+                    foreach (int i in members)
+                    {
+                        snap.Add(new BubbleResult
+                        {
+                            Uid = uid[i],
+                            Floor = f,
+                            X = px[i] - cx,
+                            Y = py[i] - cy,
+                            Radius = radius[i],
+                            Label = label[i],
+                            Dept = dept[i]
+                        });
+                    }
+                }
+
+                onFrame(new BubbleFrame
+                {
+                    Phase = phase,
+                    Iteration = iteration,
+                    Rooms = snap
+                });
+            }
+
+            Emit(SolverPhase.Initial, 0);
+
             // ---- main relaxation loop --------------------------------------------
-            var fx = new double[n];
-            var fy = new double[n];
+            double[] fx = new double[n];
+            double[] fy = new double[n];
+
             for (int iter = 0; iter < Math.Max(1, config.Iterations); iter++)
             {
                 Array.Clear(fx, 0, n);
@@ -167,12 +241,16 @@ namespace BubbleSolver
 
                 // 1) adjacency springs (directed: source pulled toward target,
                 //    target nudged half as much back, for stable convergence)
-                foreach (var (a, b) in edgePairs)
+                foreach ((int a, int b) in edgePairs)
                 {
                     double dx = px[b] - px[a];
                     double dy = py[b] - py[a];
                     double d = Math.Sqrt(dx * dx + dy * dy);
-                    if (d < 1e-6) continue;
+
+                    if (d < 1e-6)
+                    {
+                        continue;
+                    }
 
                     double rest = radius[a] + radius[b] + pad;
                     double f = config.KAdjacency * (d - rest);
@@ -185,13 +263,15 @@ namespace BubbleSolver
                 }
 
                 // 2) non-overlap repulsion, within the same floor only
-                foreach (var f in floors)
+                foreach (int f in floors)
                 {
-                    var members = membersOf[f];
+                    int[] members  = membersOf[f];
                     int m = members.Length;
+
                     for (int ii = 0; ii < m; ii++)
                     {
                         int a = members[ii];
+
                         for (int jj = ii + 1; jj < m; jj++)
                         {
                             int b = members[jj];
@@ -206,11 +286,13 @@ namespace BubbleSolver
                                 dy = rng.NextDouble() * 2 - 1;
                                 d = 1.0;
                             }
+
                             if (d < minD)
                             {
                                 double overlap = minD - d;
                                 double ux = dx / d, uy = dy / d;
                                 double f2 = config.KRepel * overlap;
+
                                 fx[a] -= f2 * ux; fy[a] -= f2 * uy;
                                 fx[b] += f2 * ux; fy[b] += f2 * uy;
                             }
@@ -219,13 +301,14 @@ namespace BubbleSolver
                 }
 
                 // 3) floor cohesion: gentle pull to each floor's centroid
-                foreach (var f in floors)
+                foreach (int f in floors)
                 {
-                    var members = membersOf[f];
+                    int[] members = membersOf[f];
                     if (members.Length == 0) continue;
                     double cx = members.Average(i => px[i]);
                     double cy = members.Average(i => py[i]);
-                    foreach (var i in members)
+
+                    foreach (int i in members)
                     {
                         fx[i] += config.KFloorCohesion * (cx - px[i]);
                         fy[i] += config.KFloorCohesion * (cy - py[i]);
@@ -237,14 +320,18 @@ namespace BubbleSolver
                 {
                     double sx = fx[i], sy = fy[i];
                     double sLen = Math.Sqrt(sx * sx + sy * sy);
+
                     if (sLen > maxStep && sLen > 1e-9)
                     {
                         sx *= maxStep / sLen;
                         sy *= maxStep / sLen;
                     }
+
                     px[i] += sx;
                     py[i] += sy;
                 }
+
+                Emit(SolverPhase.Relax, iter);
             }
 
             // ---- de-overlap pass: repulsion only, until converged or capped -----
@@ -255,13 +342,16 @@ namespace BubbleSolver
             for (int pass = 0; pass < Math.Max(0, config.DeoverlapIterations); pass++)
             {
                 double worst = 0.0;
-                foreach (var f in floors)
+
+                foreach (int f in floors)
                 {
-                    var members = membersOf[f];
+                    int[] members = membersOf[f];
                     int m = members.Length;
+
                     for (int ii = 0; ii < m; ii++)
                     {
                         int a = members[ii];
+
                         for (int jj = ii + 1; jj < m; jj++)
                         {
                             int b = members[jj];
@@ -273,34 +363,51 @@ namespace BubbleSolver
                             if (d < 1e-9)
                             {
                                 double ang = rng.NextDouble() * 2 * Math.PI;
+
                                 dx = Math.Cos(ang); dy = Math.Sin(ang); d = 1.0;
                             }
+
                             if (d < minD)
                             {
                                 double overlap = minD - d;
                                 if (overlap > worst) worst = overlap;
                                 double ux = dx / d, uy = dy / d;
                                 double shift = 0.5 * overlap;
+
                                 px[a] -= shift * ux; py[a] -= shift * uy;
                                 px[b] += shift * ux; py[b] += shift * uy;
                             }
                         }
                     }
                 }
+
                 maxOverlap = worst;
-                if (worst <= tol) { converged = true; break; }
+
+                Emit(SolverPhase.Deoverlap, pass);
+
+                if (worst <= tol)
+                {
+                    converged = true; break;
+                }
             }
-            // report in input units, not internal scale
+
+            // report in input units instead of the internal scale
             double maxOverlapReported = linScale > 0 ? maxOverlap / linScale : maxOverlap;
 
             // ---- re-center each floor to its own local origin --------------------
-            foreach (var f in floors)
+            foreach (int f in floors)
             {
-                var members = membersOf[f];
-                if (members.Length == 0) continue;
+                int[] members = membersOf[f];
+
+                if (members.Length == 0)
+                {
+                    continue;
+                }
+
                 double cx = members.Average(i => px[i]);
                 double cy = members.Average(i => py[i]);
-                foreach (var i in members)
+
+                foreach (int i in members)
                 {
                     px[i] -= cx;
                     py[i] -= cy;
@@ -308,13 +415,14 @@ namespace BubbleSolver
             }
 
             // ---- package results --------------------------------------------------
-            var resultRooms = new List<BubbleResult>(n);
-            var envelopes = new List<FloorEnvelope>(floors.Length);
+            List<BubbleResult> resultRooms = new(n);
+            List<FloorEnvelope> envelopes = new(floors.Length);
 
-            foreach (var f in floors)
+            foreach (int f in floors)
             {
-                var members = membersOf[f];
-                foreach (var i in members)
+                int[] members = membersOf[f];
+
+                foreach (int i in members)
                 {
                     resultRooms.Add(new BubbleResult
                     {
@@ -341,6 +449,8 @@ namespace BubbleSolver
                 }
             }
 
+            Emit(SolverPhase.Final, 0);
+
             string info = BuildInfo(n, floors.Length, edgePairs.Count, config,
                                      converged, maxOverlapReported, membersOf);
 
@@ -359,6 +469,7 @@ namespace BubbleSolver
             if (areaInput <= 0) 
                 areaInput = 1.0;
             double areaModel = areaInput * (linScale * linScale);
+
             return Math.Sqrt(areaModel / Math.PI);
         }
 
@@ -366,7 +477,7 @@ namespace BubbleSolver
             int n, int floorCount, int edgeCount, BubbleSolverConfig cfg,
             bool converged, double maxOverlap, Dictionary<int, int[]> membersOf)
         {
-            var lines = new List<string>
+            List<string> lines = new()
             {
                 "Bubble Solver",
                 $"Rooms: {n}   Floors: {floorCount}   Edges: {edgeCount}",
@@ -375,8 +486,11 @@ namespace BubbleSolver
                 $"De-overlap: {(converged ? "converged" : "CAP HIT (raise DeoverlapIterations)")}" +
                 $"   max residual overlap: {maxOverlap:F4} {cfg.UnitSystem}  {(converged ? "OK" : "<-- still overlapping")}"
             };
-            foreach (var kv in membersOf.OrderBy(kv => kv.Key))
+
+            foreach (KeyValuePair<int, int[]> kv in membersOf.OrderBy(kv => kv.Key))
+            {
                 lines.Add($"  Floor {kv.Key} : {kv.Value.Length} rooms");
+            }
 
             return string.Join(Environment.NewLine, lines);
         }
