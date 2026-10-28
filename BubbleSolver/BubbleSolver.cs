@@ -11,6 +11,7 @@
 //   - Adjacency pulls (directed spring) draw a room toward its target(s).
 //   - Repulsion prevents overlap, within a floor only.
 //   - Floor cohesion keeps each floor's rooms from drifting apart.
+//   - Department cohesion keeps same-department rooms together per floor.
 //   - A dedicated de-overlap pass (repulsion only) cleans up residual overlap
 //     after the main relaxation loop.
 // ==============================================================================
@@ -46,11 +47,12 @@ namespace BubbleSolver
     public sealed class BubbleSolverConfig
     {
         public LinearUnit UnitSystem { get; init; } = LinearUnit.Feet;
-        public int Iterations { get; init; } = 400;
-        public int DeoverlapIterations { get; init; } = 120;
-        public double KAdjacency { get; init; } = 0.08;       // spring stiffness
-        public double KRepel { get; init; } = 0.85;           // overlap repulsion stiffness
-        public double KFloorCohesion { get; init; } = 0.015;  // pull to floor centroid
+        public int Iterations { get; init; } = 500;
+        public int DeoverlapIterations { get; init; } = 200;
+        public double KAdjacency { get; init; } = 0.15;       // spring stiffness
+        public double KRepel { get; init; } = 0.7;           // overlap repulsion stiffness
+        public double KFloorCohesion { get; init; } = 0.02;  // pull to floor centroid
+        public double KDepartmentCohesion { get; init; } = 0.5; // pull toward department centroid
         public double Padding { get; init; } = 2.0;           // min gap between bubble edges (input units)
         public int Seed { get; init; } = 42;
         public double OverlapTolerance { get; init; } = 0.01; // input units of slop
@@ -113,8 +115,8 @@ namespace BubbleSolver
         /// <summary>
         /// Relax a flat room list into a non-overlapping, adjacency-respecting
         /// bubble diagram, grouped per floor. Mirrors the Grasshopper prototype's
-        /// physics exactly: directed adjacency springs, same-floor repulsion,
-        /// floor cohesion, clamped integration, then a dedicated de-overlap pass.
+        /// physics: directed adjacency springs, same-floor repulsion, floor and
+        /// department cohesion, clamped integration, then a dedicated de-overlap pass.
         /// </summary>
         public static BubbleSolverResult Solve(
             IReadOnlyList<RoomInput> rooms,
@@ -154,6 +156,11 @@ namespace BubbleSolver
             Dictionary<int, int[]> membersOf = floors.ToDictionary(
                 f => f,
                 f => Enumerable.Range(0, n).Where(i => floor[i] == f).ToArray());
+            int[][] departmentMembers = Enumerable.Range(0, n)
+                .Where(i => dept[i] >= 0)
+                .GroupBy(i => (floor[i], dept[i]))
+                .Select(g => g.ToArray())
+                .ToArray();
 
             // ---- resolve adjacency edges to index pairs, skipping unknown uids -
             List<(int a, int b)> edgePairs = new();
@@ -312,6 +319,20 @@ namespace BubbleSolver
                     {
                         fx[i] += config.KFloorCohesion * (cx - px[i]);
                         fy[i] += config.KFloorCohesion * (cy - py[i]);
+                    }
+                }
+
+                // 4) department cohesion: pull each known department toward its centroid, per floor
+                foreach (int[] members in departmentMembers)
+                {
+                    if (members.Length < 2) continue;
+                    double cx = members.Average(i => px[i]);
+                    double cy = members.Average(i => py[i]);
+
+                    foreach (int i in members)
+                    {
+                        fx[i] += config.KDepartmentCohesion * (cx - px[i]);
+                        fy[i] += config.KDepartmentCohesion * (cy - py[i]);
                     }
                 }
 
@@ -481,8 +502,8 @@ namespace BubbleSolver
             {
                 "Bubble Solver",
                 $"Rooms: {n}   Floors: {floorCount}   Edges: {edgeCount}",
-                $"Unit system: {cfg.UnitSystem}   iterations: {cfg.Iterations}",
-                $"kAdj={cfg.KAdjacency}  kRepel={cfg.KRepel}  kFloor={cfg.KFloorCohesion}  pad={cfg.Padding}",
+                $"Unit system: {cfg.UnitSystem}   iterations: {cfg.Iterations}   seed: {cfg.Seed}",
+                $"kAdj={cfg.KAdjacency}  kRepel={cfg.KRepel}  kFloor={cfg.KFloorCohesion}  kDept={cfg.KDepartmentCohesion}  pad={cfg.Padding}",
                 $"De-overlap: {(converged ? "converged" : "CAP HIT (raise DeoverlapIterations)")}" +
                 $"   max residual overlap: {maxOverlap:F4} {cfg.UnitSystem}  {(converged ? "OK" : "<-- still overlapping")}"
             };

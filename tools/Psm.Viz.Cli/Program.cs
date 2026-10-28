@@ -3,7 +3,7 @@
 // Usage:
 //
 //   dotnet run --project tools/Psm.Viz.Cli -- samples/program.golden.json
-//   dotnet run --project tools/Psm.Viz.Cli -- samples/program.golden.json --out viz --every 5 --seed 7
+//   dotnet run --project tools/Psm.Viz.Cli -- samples/program.golden.json --out viz --every 5 --seed 7 --k-dept 0.03
 //
 // Writes <out>/bubbles.svg (final layout) and <out>/bubbles-replay.html (every Nth iteration).
 
@@ -14,17 +14,25 @@ using Solver = BubbleSolver.BubbleSolver;   // class has the same name as its na
 
 if (args.Length == 0 || args[0] is "-h" or "--help")
 {
-    Console.WriteLine("usage: psm-viz <program.json> [--out DIR] [--every N] [--seed N]");
+    Console.WriteLine("usage: psm-viz <program.json> [--out DIR] [--every N] [--seed N] [--k-dept K]");
     return 1;
 }
 
 string input = args[0];
 string outDir = Opt("--out", "viz-out");
 int every = Math.Max(1, int.Parse(Opt("--every", "10")));
-int seed = int.Parse(Opt("--seed", "42"));
+BubbleSolverConfig defaults = new();
+int seed = int.Parse(Opt("--seed", defaults.Seed.ToString()));
+double kDepartmentCohesion = double.Parse(Opt("--k-dept", defaults.KDepartmentCohesion.ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                                           System.Globalization.CultureInfo.InvariantCulture);
 
 LoadedProgram program = LoadedProgram.Read(input);
-BubbleSolverConfig config = new() { UnitSystem = program.Units, Seed = seed };
+BubbleSolverConfig config = new()
+{
+    UnitSystem = program.Units,
+    Seed = seed,
+    KDepartmentCohesion = kDepartmentCohesion
+};
 
 // Keep every Nth frame, plus the first/last of each phase
 List<BubbleFrame> frames = new();
@@ -43,7 +51,7 @@ BubbleSolverResult result = Solver.Solve(program.ToSolverRooms(), program.ToSolv
 
 // Internal solver units are meters, while the padding is given in input units.
 double padModel = config.Padding * (config.UnitSystem == LinearUnit.Meters ? 1.0 : 0.3048);
-string title = $"Bubble solver · {program.SourceName}";
+string title = $"Bubble solver ï¿½ {program.SourceName}";
 
 Directory.CreateDirectory(outDir);
 
