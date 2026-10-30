@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Console tool: run a solver on a program JSON and write SVG / HTML replay. -->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AssemblyName>psm-viz</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\BubbleSolver\BubbleSolver.csproj" />
+		<ProjectReference Include="..\..\src\Psm.Viz\Psm.Viz.csproj" />
+	</ItemGroup>
+
+</Project>
