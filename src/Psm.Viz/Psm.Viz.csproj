@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Visual export: 2D scene -> SVG / HTML replay. -->
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<!-- Replay viewer page assets, compiled into the DLL and read by HtmlReplayWriter. -->
+	<ItemGroup>
+		<EmbeddedResource Include="Viewer\viewer.css" LogicalName="Psm.Viz.Viewer.viewer.css" />
+		<EmbeddedResource Include="Viewer\viewer.js" LogicalName="Psm.Viz.Viewer.viewer.js" />
+	</ItemGroup>
+
+</Project>

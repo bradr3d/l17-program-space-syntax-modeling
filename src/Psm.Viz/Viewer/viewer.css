@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Psm.Viz replay viewer — page styles
+   Embedded into every replay .html by HtmlReplayWriter. Shape styles (.s0, .s1, ...)
+   are generated per run by StyleSheet and appended after this file.
+   ========================================================================== */
+
+:root {
+    --bg: #f4f3ef;
+    --panel: #ffffff;
+    --border: #dddddd;
+    --text: #1c1c1c;
+    --muted: #666666;
+    --faint: #777777;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font: 14px system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+}
+
+/* ---- header ------------------------------------------------------------- */
+
+header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+}
+
+h1 {
+    margin: 0;
+    font-size: 16px;
+}
+
+#caption {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---- layout: drawing on the left, controls on the right ----------------- */
+
+main {
+    display: flex;
+    height: calc(100vh - 44px);
+}
+
+#stage-wrap {
+    flex: 1;
+    min-width: 0;
+    margin: 12px;
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+#stage {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+#stage:active {
+    cursor: grabbing;
+}
+
+aside {
+    width: 320px;
+    padding: 12px 16px 12px 4px;
+    overflow: auto;
+}
+
+/* ---- controls ----------------------------------------------------------- */
+
+h2 {
+    margin: 18px 0 6px;
+    font-size: 12px;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 6px 0;
+}
+
+button {
+    padding: 4px 10px;
+    font: inherit;
+    background: var(--panel);
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #eeeeee;
+}
+
+#slider {
+    width: 100%;
+}
+
+.layer-toggle {
+    display: block;
+    margin: 3px 0;
+}
+
+pre {
+    padding: 8px;
+    font: 12px ui-monospace, Consolas, monospace;
+    white-space: pre-wrap;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--faint);
+}
+
+/* ---- narrow screens: stack the panel under the drawing ----------------- */
+
+@media (max-width: 800px) {
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    #stage-wrap {
+        height: 70vh;
+    }
+
+    aside {
+        width: auto;
+        padding: 0 16px 16px;
+    }
+}
