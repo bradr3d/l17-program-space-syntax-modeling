@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
@@ -10,6 +10,7 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BubbleSolver\BubbleSolver.csproj" />
     <Compile Include="Program.cs" />
     <Compile Include="ExcelReaderTests.cs" />
     <Compile Include="BubbleLayoutTests.cs" />

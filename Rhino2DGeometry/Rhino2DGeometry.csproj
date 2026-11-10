@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
@@ -17,6 +17,7 @@
     <Compile Include="..\ExcelToBubbleDiagramCommand.cs" Link="ExcelToBubbleDiagramCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BubbleSolver\BubbleSolver.csproj" />
     <PackageReference Include="ClosedXML" Version="0.105.0" />
   </ItemGroup>
   <ItemGroup>
