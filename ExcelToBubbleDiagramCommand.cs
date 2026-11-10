@@ -11,10 +11,12 @@
 //   3. ClosedXML (NuGet)
 //      <PackageReference Include="ClosedXML" Version="0.105.0" />
 //      Copy this package (and its dependencies) next to the .rhp.
+//   4. BubbleSolver project reference and the build-owned adapter/layout files.
 //
 // Command: ExcelToBubbleDiagram
 // Reads ProgramInfo, expands room quantities, sizes bubbles from net SF, relaxes
-// each floor with Kangaroo2, and bakes colored curves, connections, and labels.
+// each floor with BubbleSolver (or Kangaroo2 for constrained/square layouts),
+// and bakes colored curves, connections, and labels.
 
 using System;
 using System.Collections.Generic;
@@ -54,6 +56,8 @@ namespace ExcelToBubbleDiagram
         public double ConnectionStrength { get; set; } = 0.05;
         public double BoundaryStrength { get; set; } = 10.0;
         public double BubbleGap { get; set; } = 0.25;
+        public double SolverPaddingFeet { get; set; } = 2.0;
+        public int DeoverlapIterations { get; set; } = 1000;
     }
 
     internal sealed class ProgramRow
@@ -595,8 +599,12 @@ namespace ExcelToBubbleDiagram
             BubbleDiagramData data,
             BubbleDiagramOptions options,
             Curve selectedBoundary,
-            double modelTolerance)
+            double modelTolerance,
+            double feetToModel = 1.0)
         {
+            if (UsesComponent(options, selectedBoundary) && data.Nodes.Count > 0)
+                return ComponentBubbleLayout.Solve(data, options, feetToModel);
+
             var layouts = new List<FloorLayout>();
             var floorGroups = data.Nodes
                 .GroupBy(node => node.Source.Floor, StringComparer.OrdinalIgnoreCase)
@@ -632,6 +640,9 @@ namespace ExcelToBubbleDiagram
 
             return layouts;
         }
+
+        internal static bool UsesComponent(BubbleDiagramOptions options, Curve selectedBoundary) =>
+            options.Shape == BubbleShape.Circle && selectedBoundary == null;
 
         private static void SolveFloor(
             FloorLayout layout,
@@ -967,11 +978,15 @@ namespace ExcelToBubbleDiagram
 
                 RhinoApp.WriteLine(
                     $"Solving {data.Nodes.Count} rooms on {data.FloorCount} floors...");
+                RhinoApp.WriteLine(BubbleLayoutEngine.UsesComponent(options, selectedBoundary)
+                    ? "Using BubbleSolver for circles with an automatic diagram frame."
+                    : "Using Kangaroo2 for a selected boundary or square bubbles.");
                 var layouts = BubbleLayoutEngine.Solve(
                     data,
                     options,
                     selectedBoundary,
-                    document.ModelAbsoluteTolerance);
+                    document.ModelAbsoluteTolerance,
+                    feetToModel);
 
                 undo = document.BeginUndoRecord("Excel To Bubble Diagram");
                 BubbleDiagramWriter.AddToDocument(document, layouts, options);
@@ -1029,6 +1044,8 @@ namespace ExcelToBubbleDiagram
             var scale = new OptionDouble(options.BoundaryScale, 1.0, 10.0);
             var damping = new OptionDouble(options.Damping, 0.0, 1.0);
             var iterations = new OptionInteger(options.Iterations, 1, 100000);
+            var padding = new OptionDouble(options.SolverPaddingFeet, 0.0, 1000.0);
+            var cleanup = new OptionInteger(options.DeoverlapIterations, 1, 100000);
 
             while (true)
             {
@@ -1042,6 +1059,8 @@ namespace ExcelToBubbleDiagram
                 getOption.AddOptionDouble("BoundaryScale", ref scale);
                 getOption.AddOptionDouble("Damping", ref damping);
                 getOption.AddOptionInteger("Iterations", ref iterations);
+                getOption.AddOptionDouble("GapFeet", ref padding);
+                getOption.AddOptionInteger("CleanupPasses", ref cleanup);
 
                 var result = getOption.Get();
                 if (result == GetResult.Cancel)
@@ -1057,6 +1076,8 @@ namespace ExcelToBubbleDiagram
             options.BoundaryScale = scale.CurrentValue;
             options.Damping = damping.CurrentValue;
             options.Iterations = iterations.CurrentValue;
+            options.SolverPaddingFeet = padding.CurrentValue;
+            options.DeoverlapIterations = cleanup.CurrentValue;
             return true;
         }
 
