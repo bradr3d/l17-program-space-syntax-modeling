@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -30,7 +31,7 @@
     <Compile Include="..\Rhino2DGeometry\BubbleMetadataReader.cs" />
     <Reference Include="RhinoCommon">
       <HintPath>C:\Program Files\Rhino 8\System\netcore\RhinoCommon.dll</HintPath>
-      <Private>true</Private>
+      <Private>false</Private>
     </Reference>
     <Reference Include="KangarooSolver">
       <HintPath>C:\Program Files\Rhino 8\Plug-ins\Grasshopper\Components\KangarooSolver.dll</HintPath>

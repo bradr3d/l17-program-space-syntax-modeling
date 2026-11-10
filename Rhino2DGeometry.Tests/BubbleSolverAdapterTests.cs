@@ -70,19 +70,20 @@ internal static class BubbleSolverAdapterTests
     {
         foreach (var units in new[] { UnitSystem.Feet, UnitSystem.Meters, UnitSystem.Millimeters })
         {
-            doc.ModelUnitSystem = units;
             var scale = RhinoMath.UnitScale(UnitSystem.Feet, units);
-            doc.ModelAbsoluteTolerance = 0.001 * scale;
             foreach (var workbook in Workbooks())
             {
+                using var scenarioDoc = RhinoDoc.CreateHeadless(null);
+                scenarioDoc.ModelUnitSystem = units;
+                scenarioDoc.ModelAbsoluteTolerance = 0.001 * scale;
                 var data = BubbleDiagramExcelReader.Load(workbook, "ProgramInfo", scale);
                 var options = new BubbleDiagramOptions();
-                var layouts = BubbleLayoutEngine.Solve(data, options, null, doc.ModelAbsoluteTolerance, scale);
+                var layouts = BubbleLayoutEngine.Solve(data, options, null, scenarioDoc.ModelAbsoluteTolerance, scale);
                 try
                 {
                     ValidateLayouts(layouts, options, scale);
-                    BubbleDiagramWriter.AddToDocument(doc, layouts, options);
-                    var rooms = BubbleMetadataReader.Read(doc.Objects.ToList(), 3, out var ignored);
+                    BubbleDiagramWriter.AddToDocument(scenarioDoc, layouts, options);
+                    var rooms = BubbleMetadataReader.Read(scenarioDoc.Objects.ToList(), 3, out var ignored);
                     Check(rooms.Count == 151 && ignored > 0, "The writer and reader must preserve all rooms among diagram objects.");
                     var source = data.Nodes.ToDictionary(node => node.Uid);
                     foreach (var room in rooms)
@@ -95,16 +96,15 @@ internal static class BubbleSolverAdapterTests
                               "Room metadata and colors must survive the Rhino handoff.");
                     }
                     var settings = new GenerationSettings { UnitScale = scale };
-                    var plan = FloorplanPipeline.Generate(rooms, settings, doc.ModelAbsoluteTolerance);
+                    var plan = FloorplanPipeline.Generate(rooms, settings, scenarioDoc.ModelAbsoluteTolerance);
                     Check(plan.Rooms.Count == 151, "The floorplan pipeline must accept every solver room.");
                     if (Path.GetFileNameWithoutExtension(workbook).EndsWith("_2"))
-                        Check(DocumentWriter.Write(doc, plan, settings) > 0, "The two-floor workbook must bake a floorplan.");
+                        Check(DocumentWriter.Write(scenarioDoc, plan, settings) > 0, "The two-floor workbook must bake a floorplan.");
                     Console.WriteLine(Path.GetFileName(workbook) + " / " + units + ": 151 circles, metadata, clearance, and floorplan generation passed.");
                 }
                 finally
                 {
                     foreach (var layout in layouts) layout.Boundary.Dispose();
-                    foreach (var obj in doc.Objects.ToList()) doc.Objects.Delete(obj.Id, true);
                 }
             }
         }
