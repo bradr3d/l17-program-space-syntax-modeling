@@ -2,6 +2,8 @@
 
 This folder is the current C#/.NET build and testing root.
 
+`Generate2DFloorplan` now also creates 14-foot 3D room masses, leaves corridors and stairs flat, and exports `floorplan.svg` here. See [rebuild and Rhino command instructions](Rhino2DGeometry/README.md#rebuild-and-install-after-changes).
+
 - `Rhino2DGeometry/`: Rhino 8 plug-in, build instructions, and Rhino smoke test. See [the project guide](Rhino2DGeometry/README.md).
 - `Rhino2DGeometry.Tests/`: standalone engine tests.
 - `ExcelToBubbleDiagramCommand.cs`: active C# source linked by the plug-in project; keep it here.

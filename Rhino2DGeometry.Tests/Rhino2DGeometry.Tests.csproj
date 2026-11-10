@@ -11,6 +11,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="ExcelReaderTests.cs" />
+    <Compile Include="BubbleLayoutTests.cs" />
+    <Compile Include="..\ExcelToBubbleDiagramCommand.cs" Link="ExcelToBubbleDiagramCommand.cs" />
+    <Compile Include="..\Rhino2DGeometry\RoomVolumes.cs" />
+    <Compile Include="..\Rhino2DGeometry\FloorplanSvg.cs" />
     <Compile Include="..\Rhino2DGeometry\Models.cs" />
     <Compile Include="..\Rhino2DGeometry\UserTextParser.cs" />
     <Compile Include="..\Rhino2DGeometry\LayoutEngine.cs" />
@@ -23,5 +28,10 @@
       <HintPath>C:\Program Files\Rhino 8\System\netcore\RhinoCommon.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="KangarooSolver">
+      <HintPath>C:\Program Files\Rhino 8\Plug-ins\Grasshopper\Components\KangarooSolver.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
   </ItemGroup>
 </Project>

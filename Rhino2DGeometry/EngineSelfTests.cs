@@ -14,7 +14,7 @@ namespace SeniorDesign.Rhino2DGeometry
             RunManaged();
             RunGeometry();
             return "Test2DFloorplanEngine passed: metadata, clustering, exact areas, " +
-                   "shared-wall doors, corridor widths, wall openings, and door swings.";
+                   "shared-wall doors, corridor widths, wall openings, door swings, room volumes, and SVG export.";
         }
 
         public static string RunManaged()
@@ -23,7 +23,8 @@ namespace SeniorDesign.Rhino2DGeometry
             TestMetadataValidation();
             TestCorridorWidthFormula();
             TestLayoutAnalysis();
-            return "Managed tests passed: metadata, corridor widths, floor assignment, clustering, exact area, and chain packing.";
+            TestRoomVolumeSettings();
+            return "Managed tests passed: metadata, stair classification, height settings, corridor widths, floor assignment, clustering, exact area, and chain packing.";
         }
 
         private static void TestLayoutAnalysis()
@@ -60,15 +61,110 @@ namespace SeniorDesign.Rhino2DGeometry
         {
             TestLayoutAndCirculation();
             TestWallOpenings();
-            return "Geometry tests passed: clustering, exact areas, shared walls, openings, swings.";
+            TestVolumesAndSvg();
+            return "Geometry tests passed: clustering, exact areas, shared walls, openings, swings, unit-aware volumes, flat stairs, and SVG export.";
+        }
+
+        private static void TestRoomVolumeSettings()
+        {
+            Assert(UserTextParser.ParseRoomType(null, "Stair 2") == RoomType.Staircase, "numbered stair");
+            Assert(UserTextParser.ParseRoomType(null, "Stair2") == RoomType.Staircase, "attached stair number");
+            Assert(UserTextParser.ParseRoomType(null, "STAIRCASE A") == RoomType.Staircase, "staircase label");
+            Assert(UserTextParser.ParseRoomType(null, "Upstairs office") == RoomType.Room, "whole word stair detection");
+            Assert(UserTextParser.ParseRoomType("Room", "Stairs") == RoomType.Room, "explicit room override");
+            Assert(UserTextParser.ParseRoomType("Staircase", "Core") == RoomType.Staircase, "explicit staircase");
+            ExpectError(() => UserTextParser.ParseRoomType("Invalid", "Stairs"), "RoomType");
+            Assert(System.IO.Directory.Exists(System.IO.Path.Combine(FloorplanSvg.ResolveProjectRoot(), "Rhino2DGeometry")), "export root from assembly location");
+            var settings = new RoomVolumeSettings();
+            Assert(settings.ResolveHeightFeet("A") == 14, "default height");
+            settings.HeightOverridesFeet["A"] = 18;
+            Assert(settings.ResolveHeightFeet("a") == 18, "UID height override");
+            foreach (var invalid in new[] { 0.0, -1.0, double.NaN, double.PositiveInfinity })
+            {
+                settings.HeightOverridesFeet["A"] = invalid;
+                var rejected = false;
+                try { settings.ResolveHeightFeet("A"); } catch (ArgumentException) { rejected = true; }
+                Assert(rejected, "invalid height rejected");
+                settings.DefaultRoomHeightFeet = invalid;
+                rejected = false;
+                try { settings.ResolveHeightFeet("B"); } catch (ArgumentException) { rejected = true; }
+                Assert(rejected, "invalid default rejected");
+            }
+        }
+
+        private static void TestVolumesAndSvg()
+        {
+            foreach (var scale in new[] { 1.0, 304.8 })
+            {
+                var settings = TestSettings();
+                settings.UnitScale = scale;
+                var fixture = Fixture();
+                fixture.Last().FloorPreference = 2;
+                var result = FloorplanPipeline.Generate(fixture, settings, 0.01);
+                Assert(result.FloorCount >= 2, "multi-floor volume fixture");
+                result.Rooms[0].Room.Label = "Room <A> & B";
+                result.Rooms[1].Room.RoomType = RoomType.Staircase;
+                var heights = new RoomVolumeSettings();
+                heights.HeightOverridesFeet[result.Rooms[0].Room.Uid] = 18;
+                foreach (var room in result.Rooms)
+                {
+                    using (var solid = RoomVolumes.Create(room, settings, heights))
+                    {
+                        if (room.Room.RoomType == RoomType.Staircase)
+                            Assert(solid == null, "stairs stay flat");
+                        else
+                        {
+                            Assert(solid.IsSolid, "capped room solid");
+                            var bounds = solid.GetBoundingBox(true);
+                            Assert(Math.Abs(bounds.Max.Z - bounds.Min.Z - heights.ResolveHeightFeet(room.Room.Uid) * scale) < 1e-6, "height in model units");
+                            using (var brep = solid.ToBrep())
+                            using (var mass = VolumeMassProperties.Compute(brep))
+                                Assert(Math.Abs(mass.Volume - room.Room.Area * scale * scale * heights.ResolveHeightFeet(room.Room.Uid) * scale) < Math.Max(1e-4, mass.Volume * 1e-8), "room volume preserves footprint area");
+                            Assert(bounds.Min.DistanceTo(room.Rectangle.BoundingBox.Min) < 1e-6, "room base position preserved");
+                        }
+                    }
+                }
+                Assert(result.Corridors.All(c => Math.Abs(c.Line.From.Z) < 1e-8 && Math.Abs(c.Line.To.Z) < 1e-8), "corridors planar");
+                var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "floorplan-test-" + Guid.NewGuid() + ".svg");
+                try
+                {
+                    FloorplanSvg.Write(path, result, settings, 0.01);
+                    var xml = System.Xml.Linq.XDocument.Load(path);
+                    System.Xml.Linq.XNamespace ns = "http://www.w3.org/2000/svg";
+                    Assert(xml.Descendants(ns + "text").Count() == result.Rooms.Count, "SVG room labels");
+                    Assert(xml.Descendants(ns + "tspan").Any(t => t.Value == "Room <A> & B"), "escaped SVG label");
+                    Assert(xml.Descendants(ns + "path").Any(p => ((string)p.Attribute("d")).Contains(" A ")), "SVG door arcs");
+                    Assert(xml.Root.Attribute("viewBox") != null, "SVG bounds");
+                    Assert(xml.Descendants(ns + "g").Count(g => g.Attribute("id") != null) == result.FloorCount, "SVG all floors");
+                    Assert(xml.Descendants(ns + "polyline").Count() == result.Corridors.Count(c => c.Ribbon != null), "SVG corridor ribbons");
+                    var view = ((string)xml.Root.Attribute("viewBox")).Split(' ').Select(v => double.Parse(v, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
+                    Assert(view[2] > 0 && view[3] > 0, "positive SVG bounds");
+                    foreach (var room in result.Rooms)
+                    {
+                        var b = room.Rectangle.BoundingBox;
+                        Assert(b.Min.X >= view[0] && b.Max.X <= view[0] + view[2] && -b.Max.Y >= view[1] && -b.Min.Y <= view[1] + view[3], "SVG contains room footprint");
+                    }
+                    var center = result.Rooms[0].Rectangle.Center;
+                    var text = xml.Descendants(ns + "text").First();
+                    Assert(Math.Abs(double.Parse((string)text.Attribute("y"), System.Globalization.CultureInfo.InvariantCulture) + center.Y) < 1e-6, "SVG Y reflection");
+                    result.Rooms[0].Room.Label = "Replacement";
+                    FloorplanSvg.Write(path, result, settings, 0.01);
+                    Assert(!System.IO.File.ReadAllText(path).Contains("&lt;A&gt;"), "SVG replaces previous generation");
+                }
+                finally { if (System.IO.File.Exists(path)) System.IO.File.Delete(path); }
+            }
         }
 
         public static string RunBake(RhinoDoc doc)
         {
             if (doc == null)
                 throw new ArgumentNullException("doc");
+            TestMixedBubbleSelection(doc);
             var settings = TestSettings();
-            var result = FloorplanPipeline.Generate(Fixture(), settings, Math.Max(0.01, doc.ModelAbsoluteTolerance));
+            var fixture = Fixture();
+            fixture.Last().RoomType = RoomType.Staircase;
+            var result = FloorplanPipeline.Generate(fixture, settings, Math.Max(0.01, doc.ModelAbsoluteTolerance));
+            var beforeIds = new HashSet<Guid>(doc.Objects.Select(o => o.Id));
             var added = DocumentWriter.Write(doc, result, settings);
             Assert(added > 0, "baked object count");
             Assert(doc.Objects.Count >= added, "document objects");
@@ -79,7 +175,45 @@ namespace SeniorDesign.Rhino2DGeometry
             Assert(paths.Any(p => p.IndexOf("Doors", StringComparison.OrdinalIgnoreCase) >= 0), "Doors layer");
             Assert(paths.Any(p => p.IndexOf("Diagnostics", StringComparison.OrdinalIgnoreCase) >= 0), "Diagnostics layer");
             Assert(doc.Groups.Count >= result.FloorCount, "floor groups");
+            var created = doc.Objects.Where(o => !beforeIds.Contains(o.Id)).ToList();
+            var volumes = created.Where(o => doc.Layers[o.Attributes.LayerIndex].Name == "Rooms3D").ToList();
+            Assert(volumes.Count == result.Rooms.Count(r => r.Room.RoomType == RoomType.Room), "baked volume count");
+            Assert(volumes.All(o => o.Attributes.GetUserString("HeightFeet") == "14" && o.Attributes.GetUserString("RoomType") == "Room"), "volume metadata");
+            var stairs = created.Where(o => doc.Layers[o.Attributes.LayerIndex].Name == "Stairs").ToList();
+            Assert(stairs.Count == 1 && ((Curve)stairs[0].Geometry).IsClosed && stairs[0].Geometry.GetBoundingBox(true).Max.Z == 0, "baked flat closed staircase");
             return "Bake test passed: " + added + " objects on " + result.FloorCount + " floor(s).";
+        }
+
+        private static void TestMixedBubbleSelection(RhinoDoc doc)
+        {
+            var ids = new List<Guid>();
+            try
+            {
+                var room = new Rhino.DocObjects.ObjectAttributes();
+                room.SetUserString("UID", "SelectionTest");
+                room.SetUserString("Area", "100");
+                ids.Add(doc.Objects.AddCircle(new Circle(Plane.WorldXY, 5), room));
+                ids.Add(doc.Objects.AddLine(Point3d.Origin, new Point3d(10, 0, 0)));
+                ids.Add(doc.Objects.AddCurve(new Rectangle3d(Plane.WorldXY, 20, 20).ToNurbsCurve()));
+                ids.Add(doc.Objects.AddCircle(new Circle(Plane.WorldXY, 20)));
+                int ignored;
+                var rooms = BubbleMetadataReader.Read(ids.Select(id => doc.Objects.FindId(id)), 3, out ignored);
+                Assert(rooms.Count == 1 && ignored == 3, "mixed selection ignores untagged connections, boundaries, and other curves");
+                ExpectError(() => BubbleMetadataReader.Read(ids.Skip(1).Select(id => doc.Objects.FindId(id)), 3), "No valid");
+
+                var malformed = doc.Objects.AddLine(Point3d.Origin, new Point3d(5, 0, 0), room);
+                ids.Add(malformed);
+                ExpectError(() => BubbleMetadataReader.Read(new[] { doc.Objects.FindId(malformed) }, 3), "not a circle");
+                var missingArea = new Rhino.DocObjects.ObjectAttributes();
+                missingArea.SetUserString("UID", "MissingArea");
+                var invalidCircle = doc.Objects.AddCircle(new Circle(Plane.WorldXY, 5), missingArea);
+                ids.Add(invalidCircle);
+                ExpectError(() => BubbleMetadataReader.Read(new[] { doc.Objects.FindId(invalidCircle) }, 3), "Area");
+            }
+            finally
+            {
+                foreach (var id in ids) doc.Objects.Delete(id, true);
+            }
         }
 
         private static void TestMetadataParsing()

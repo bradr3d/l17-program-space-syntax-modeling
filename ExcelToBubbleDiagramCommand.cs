@@ -188,7 +188,9 @@ namespace ExcelToBubbleDiagram
             if (!File.Exists(workbookPath))
                 throw new FileNotFoundException("The Excel workbook was not found.", workbookPath);
 
-            using var workbook = new XLWorkbook(workbookPath);
+            // Read the saved workbook even when Excel has it open for editing.
+            using var stream = new FileStream(workbookPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var workbook = new XLWorkbook(stream);
             if (!workbook.Worksheets.TryGetWorksheet(worksheetName, out var worksheet))
                 throw new InvalidDataException(
                     $"Worksheet '{worksheetName}' was not found. Available sheets: " +
@@ -200,6 +202,7 @@ namespace ExcelToBubbleDiagram
 
             var (headerRow, columns) = FindHeaders(worksheet, used);
             var rows = new List<ProgramRow>();
+            var skippedWarnings = new List<string>();
 
             for (var rowNumber = headerRow + 1; rowNumber <= used.RangeAddress.LastAddress.RowNumber; rowNumber++)
             {
@@ -210,10 +213,23 @@ namespace ExcelToBubbleDiagram
 
                 var quantityText = CellText(worksheet.Cell(rowNumber, columns["Room Qty/ Units"]));
                 var areaText = CellText(worksheet.Cell(rowNumber, columns["Net SF/ Units"]));
-                if (!TryParseNumber(quantityText, out var quantityNumber) || quantityNumber <= 0)
+                if (!TryParseNumber(quantityText, out var quantityNumber) ||
+                    !double.IsFinite(quantityNumber) || quantityNumber < 0)
                     throw new InvalidDataException(
-                        $"Row {rowNumber}: 'Room Qty/ Units' must be a positive number (received '{quantityText}').");
-                if (!TryParseNumber(areaText, out var area) || area <= 0)
+                        $"Row {rowNumber}: 'Room Qty/ Units' must be a non-negative number (received '{quantityText}'). Use 0 to omit a row.");
+
+                // Formula-filled department breaks contain zeroes rather than empty cells.
+                // Named spaces with zero quantity are also intentionally excluded from the program.
+                // Do this before area validation: excluded rows need no usable room area.
+                if (quantityNumber == 0)
+                {
+                    if (!IsBlankOrZero(programName) || !IsBlankOrZero(department))
+                        skippedWarnings.Add(
+                            $"Row {rowNumber}: skipped '{(string.IsNullOrWhiteSpace(programName) ? department : programName)}' because 'Room Qty/ Units' is 0.");
+                    continue;
+                }
+
+                if (!TryParseNumber(areaText, out var area) || !double.IsFinite(area) || area <= 0)
                     throw new InvalidDataException(
                         $"Row {rowNumber}: 'Net SF/ Units' must be a positive number (received '{areaText}').");
 
@@ -237,8 +253,13 @@ namespace ExcelToBubbleDiagram
             if (rows.Count == 0)
                 throw new InvalidDataException("No program rows were found below the header row.");
 
-            return BuildData(rows, feetToModel);
+            var data = BuildData(rows, feetToModel);
+            data.Warnings.InsertRange(0, skippedWarnings);
+            return data;
         }
+
+        private static bool IsBlankOrZero(string text) =>
+            string.IsNullOrWhiteSpace(text) || (TryParseNumber(text, out var number) && number == 0);
 
         private static BubbleDiagramData BuildData(IReadOnlyList<ProgramRow> rows, double feetToModel)
         {
@@ -496,6 +517,7 @@ namespace ExcelToBubbleDiagram
         private readonly double[] _radii;
         private readonly double _strength;
         private readonly double _gap;
+        private readonly int[] _contactCounts;
 
         public VariableRadiusCollisionGoal(
             IReadOnlyList<Point3d> points,
@@ -512,6 +534,7 @@ namespace ExcelToBubbleDiagram
             _radii = radii.ToArray();
             _gap = gap;
             _strength = strength;
+            _contactCounts = new int[points.Count];
         }
 
         public int[] ParticleIndices => PIndex;
@@ -522,6 +545,7 @@ namespace ExcelToBubbleDiagram
             {
                 Move[index] = Vector3d.Zero;
                 Weighting[index] = 0;
+                _contactCounts[index] = 0;
             }
 
             for (var first = 0; first < PIndex.Length - 1; first++)
@@ -540,16 +564,27 @@ namespace ExcelToBubbleDiagram
                     if (distance < RhinoMath.ZeroTolerance)
                     {
                         separation = Vector3d.XAxis;
-                        distance = 1.0;
+                        distance = 0;
                     }
+                    else
+                        separation /= distance;
 
-                    var correction =
-                        0.5 * separation * (1.0 - minimumDistance / distance);
+                    var correction = 0.5 * separation * (distance - minimumDistance);
                     Move[first] += correction;
                     Move[second] -= correction;
-                    Weighting[first] = _strength;
-                    Weighting[second] = _strength;
+                    _contactCounts[first]++;
+                    _contactCounts[second]++;
                 }
+            }
+
+            // Each contact is one constraint. Kangaroo expects a weighted average
+            // movement per particle, not the unbounded sum of its contact moves.
+            for (var index = 0; index < Move.Length; index++)
+            {
+                if (_contactCounts[index] == 0)
+                    continue;
+                Move[index] /= _contactCounts[index];
+                Weighting[index] = _strength * _contactCounts[index];
             }
         }
     }
@@ -650,9 +685,14 @@ namespace ExcelToBubbleDiagram
                 Math.Max(0.0, Math.Min(1.0, options.Damping)),
                 Math.Max(1, options.Iterations));
 
+            var floorBounds = layout.Boundary.GetBoundingBox(true);
+            var maximumDistance = floorBounds.Diagonal.Length * 2;
             for (var index = 0; index < layout.Nodes.Count; index++)
             {
                 var position = physicalSystem.GetPosition(collision.ParticleIndices[index]);
+                if (!position.IsValid || position.DistanceTo(floorBounds.Center) > maximumDistance)
+                    throw new InvalidOperationException(
+                        $"Bubble layout on floor {layout.Floor} became unstable. No geometry was created. Try a larger boundary or lower damping.");
                 position.Z = 0;
                 layout.Nodes[index].Position = position;
             }

@@ -36,12 +36,16 @@ namespace SeniorDesign.Rhino2DGeometry
             uint undo = 0;
             try
             {
-                var bubbles = BubbleMetadataReader.Read(selected, settings.DefaultDoorWidth);
+                int ignoredCount;
+                var bubbles = BubbleMetadataReader.Read(selected, settings.DefaultDoorWidth, out ignoredCount);
+                if (ignoredCount > 0)
+                    RhinoApp.WriteLine("Ignored " + ignoredCount + " selected objects without room metadata (connections, labels, boundaries, or other geometry).");
                 RhinoApp.WriteLine("Generating rooms and clusters from " + bubbles.Count + " bubbles...");
                 var result = FloorplanPipeline.Generate(bubbles, settings, doc.ModelAbsoluteTolerance);
 
-                undo = doc.BeginUndoRecord("Generate 2D Floorplan");
+                undo = doc.BeginUndoRecord("Generate 2D and 3D Floorplan");
                 var objectCount = DocumentWriter.Write(doc, result, settings);
+                RhinoApp.WriteLine("3D room masses created at 14 feet; corridors and staircases remain flat.");
                 foreach (var warning in result.Warnings)
                     RhinoApp.WriteLine("Warning: " + warning);
                 RhinoApp.WriteLine(
@@ -51,6 +55,16 @@ namespace SeniorDesign.Rhino2DGeometry
                     " floors, " + objectCount + " Rhino objects.");
                 RhinoApp.WriteLine(
                     "Plate containment is area-based only; non-rectangular outline fitting is not implemented.");
+                try
+                {
+                    var svgPath = System.IO.Path.Combine(FloorplanSvg.ResolveProjectRoot(), "floorplan.svg");
+                    FloorplanSvg.Write(svgPath, result, settings, doc.ModelAbsoluteTolerance);
+                    RhinoApp.WriteLine("2D SVG exported: " + svgPath);
+                }
+                catch (Exception exportException)
+                {
+                    RhinoApp.WriteLine("Geometry created, but SVG export failed: " + exportException.Message);
+                }
                 return Result.Success;
             }
             catch (Exception exception)

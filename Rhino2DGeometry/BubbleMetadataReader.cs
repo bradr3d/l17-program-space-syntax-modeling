@@ -11,11 +11,25 @@ namespace SeniorDesign.Rhino2DGeometry
     {
         public static List<BubbleRoom> Read(IEnumerable<RhinoObject> objects, double defaultDoorWidth)
         {
+            int ignoredCount;
+            return Read(objects, defaultDoorWidth, out ignoredCount);
+        }
+
+        public static List<BubbleRoom> Read(IEnumerable<RhinoObject> objects, double defaultDoorWidth, out int ignoredCount)
+        {
             var rooms = new List<BubbleRoom>();
             var errors = new List<string>();
+            ignoredCount = 0;
 
             foreach (var obj in objects)
             {
+                // Window selections include diagram connections, labels, and the boundary.
+                // Only objects carrying room identity/area metadata are room candidates.
+                if (!HasRoomMetadata(obj.Attributes))
+                {
+                    ignoredCount++;
+                    continue;
+                }
                 Circle circle;
                 var curve = obj.Geometry as Curve;
                 if (curve == null || !curve.TryGetCircle(out circle))
@@ -47,9 +61,12 @@ namespace SeniorDesign.Rhino2DGeometry
             return rooms;
         }
 
+        internal static bool HasRoomMetadata(ObjectAttributes attributes) =>
+            attributes.GetUserString("UID") != null || attributes.GetUserString("Area") != null;
+
         private static Dictionary<string, string> ReadUserText(RhinoObject obj)
         {
-            var keys = new[] { "UID", "Area", "Label", "Dept", "FloorPref", "Shared", "AdjacentTo", "DoorWidth" };
+            var keys = new[] { "UID", "Area", "Label", "Dept", "FloorPref", "Shared", "AdjacentTo", "DoorWidth", "RoomType" };
             var text = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (var key in keys)
                 text[key] = obj.Attributes.GetUserString(key);

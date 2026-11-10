@@ -18,11 +18,13 @@ print("Self-test command executed.")
 
 doc = Rhino.RhinoDoc.ActiveDoc
 before = doc.Objects.Count
+before_ids = set(obj.Id for obj in doc.Objects)
+doc.Objects.UnselectAll()
 if not Rhino.RhinoApp.RunScript("_Create2DFloorplanFixture", False):
     raise RuntimeError("Create2DFloorplanFixture could not be executed.")
 
 for obj in doc.Objects:
-    if obj.Attributes.GetUserString("UID"):
+    if obj.Id not in before_ids and obj.Attributes.GetUserString("UID"):
         obj.Select(True)
 
 if not Rhino.RhinoApp.RunScript("_Generate2DFloorplan", False):
@@ -33,6 +35,8 @@ layers = [layer.FullPath for layer in doc.Layers if not layer.IsDeleted]
 required = (
     "Floorplan",
     "Rooms",
+    "Rooms3D",
+    "Stairs",
     "Corridors",
     "Branch",
     "Trunk",
@@ -44,5 +48,11 @@ if missing:
     raise RuntimeError("Missing layers: {}".format(missing))
 if after <= before:
     raise RuntimeError("Generate2DFloorplan did not add geometry.")
+svg_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "floorplan.svg"))
+if not os.path.isfile(svg_path):
+    raise RuntimeError("SVG export missing: {}".format(svg_path))
+from xml.etree import ElementTree
+ElementTree.parse(svg_path)
+print("SVG export: {}".format(svg_path))
 print("Smoke test added {} objects. Layers: {}".format(after - before, len(layers)))
 print("Rhino2DGeometry smoke test passed.")

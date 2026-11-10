@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Rhino.Geometry;
 
 namespace SeniorDesign.Rhino2DGeometry
@@ -43,6 +44,7 @@ namespace SeniorDesign.Rhino2DGeometry
                 SourceId = sourceId,
                 Uid = uid.Trim(),
                 Label = Fallback(Value(text, "Label"), uid.Trim()),
+                RoomType = ParseRoomType(Value(text, "RoomType"), Fallback(Value(text, "Label"), uid.Trim())),
                 Department = Fallback(Value(text, "Dept"), "Unassigned"),
                 Area = area,
                 FloorPreference = floorPreference,
@@ -53,6 +55,21 @@ namespace SeniorDesign.Rhino2DGeometry
                 BubbleRadius = radius,
                 Color = color
             };
+        }
+
+        internal static RoomType ParseRoomType(string value, string label)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                RoomType parsed;
+                if (Enum.TryParse(value.Trim(), true, out parsed) &&
+                    (value.Trim().Equals("Room", StringComparison.OrdinalIgnoreCase) ||
+                     value.Trim().Equals("Staircase", StringComparison.OrdinalIgnoreCase)))
+                    return parsed;
+                throw new ArgumentException("RoomType must be Room or Staircase.");
+            }
+            return Regex.IsMatch(label ?? "", @"\b(?:stairs?|staircases?)(?:\s*#?\d+)?\b", RegexOptions.IgnoreCase)
+                ? RoomType.Staircase : RoomType.Room;
         }
 
         public static void Validate(IList<BubbleRoom> rooms)

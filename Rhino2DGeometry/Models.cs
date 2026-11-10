@@ -45,11 +45,14 @@ namespace SeniorDesign.Rhino2DGeometry
         }
     }
 
+    internal enum RoomType { Room, Staircase }
+
     internal sealed class BubbleRoom
     {
         public Guid SourceId;
         public string Uid;
         public string Label;
+        public RoomType RoomType;
         public string Department;
         public double Area;
         public int FloorPreference;

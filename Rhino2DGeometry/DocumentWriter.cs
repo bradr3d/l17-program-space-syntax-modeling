@@ -11,8 +11,10 @@ namespace SeniorDesign.Rhino2DGeometry
     internal static class DocumentWriter
     {
         public static int Write(
-            RhinoDoc doc, FloorplanResult result, GenerationSettings settings)
+            RhinoDoc doc, FloorplanResult result, GenerationSettings settings, RoomVolumeSettings volumes = null)
         {
+            volumes = volumes ?? new RoomVolumeSettings();
+            volumes.Validate();
             var root = EnsureLayer(doc, "Floorplan", Guid.Empty, Color.DimGray);
             var added = 0;
 
@@ -22,6 +24,8 @@ namespace SeniorDesign.Rhino2DGeometry
                     doc.Layers[root].Id, Color.Gray);
                 var parentId = doc.Layers[floorLayer].Id;
                 var roomLayer = EnsureLayer(doc, "Rooms", parentId, Color.DarkSlateGray);
+                var volumeLayer = EnsureLayer(doc, "Rooms3D", parentId, Color.DarkSlateGray);
+                var stairsLayer = EnsureLayer(doc, "Stairs", parentId, Color.Gray);
                 var labelLayer = EnsureLayer(doc, "Labels", parentId, Color.Black);
                 var corridorParent = EnsureLayer(doc, "Corridors", parentId, Color.Gray);
                 var corridorParentId = doc.Layers[corridorParent].Id;
@@ -49,6 +53,22 @@ namespace SeniorDesign.Rhino2DGeometry
                 var floorDoors = result.Doors.Where(d => d.Floor == floor).ToList();
                 foreach (var room in result.Rooms.Where(r => r.Floor == floor))
                 {
+                    if (room.Room.RoomType == RoomType.Staircase)
+                    {
+                        using (var footprint = room.Rectangle.ToNurbsCurve())
+                            AddId(doc.Objects.AddCurve(footprint, RoomAttributes(stairsLayer, room)), floorIds, ref added);
+                    }
+                    else
+                    {
+                        using (var solid = RoomVolumes.Create(room, settings, volumes))
+                        {
+                            var volumeAttributes = RoomAttributes(volumeLayer, room);
+                            volumeAttributes.SetUserString("HeightFeet", volumes.ResolveHeightFeet(room.Room.Uid).ToString(System.Globalization.CultureInfo.InvariantCulture));
+                            var id = doc.Objects.AddExtrusion(solid, volumeAttributes);
+                            if (id == Guid.Empty) throw new InvalidOperationException("Failed to bake room volume: " + room.Room.Uid);
+                            AddId(id, floorIds, ref added);
+                        }
+                    }
                     var attributes = RoomAttributes(roomLayer, room);
                     foreach (var wall in WallOpenings.Segments(room, floorDoors,
                         doc.ModelAbsoluteTolerance))
@@ -103,6 +123,7 @@ namespace SeniorDesign.Rhino2DGeometry
         {
             var attributes = Attributes(layer, room.Room.Color, room.Room.Label);
             attributes.SetUserString("UID", room.Room.Uid);
+            attributes.SetUserString("RoomType", room.Room.RoomType.ToString());
             attributes.SetUserString("Area", room.Room.Area.ToString("0.###"));
             attributes.SetUserString("Dept", room.Room.Department);
             attributes.SetUserString("Floor", room.Floor.ToString());
