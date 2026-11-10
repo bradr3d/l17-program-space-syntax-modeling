@@ -14,6 +14,7 @@ internal static class Program
         {
             Console.WriteLine(ExcelReaderTests.Run());
             Console.WriteLine(BubbleLayoutTests.RunCollision());
+            Console.WriteLine(BubbleSolverAdapterTests.RunManaged());
             Console.WriteLine(EngineSelfTests.RunManaged());
             if (Array.IndexOf(args, "--rhino") >= 0)
             {
@@ -29,6 +30,7 @@ internal static class Program
                 using (var core = new RhinoCore(new[] { "/NOSPLASH", "/NOTEMPLATE" }, WindowStyle.NoWindow))
                 using (var doc = RhinoDoc.CreateHeadless(null))
                 {
+                    Console.WriteLine(BubbleSolverAdapterTests.RunRhino(doc));
                     Console.WriteLine(BubbleLayoutTests.Run(doc));
                     Console.WriteLine(EngineSelfTests.RunGeometry());
                     Console.WriteLine(EngineSelfTests.RunBake(doc));

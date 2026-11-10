@@ -1,8 +1,8 @@
 # Rhino 2D Geometry
 
-Rhino 8 plug-in (`net7.0-windows`) with two main commands:
+Rhino 8 plug-in (`net8.0-windows`) with two main commands:
 
-- `ExcelToBubbleDiagram` — reads a program workbook, sizes bubbles from net SF, and relaxes a constrained bubble diagram with Kangaroo2.
+- `ExcelToBubbleDiagram` — reads a program workbook, sizes bubbles from net SF, and solves automatic circular diagrams with the separate BubbleSolver component. Squares and selected boundaries use Kangaroo2.
 - `Generate2DFloorplan` — converts selected metadata-tagged bubble circles into 2D room walls, corridor ribbons, wall openings, door leaves, and swing arcs.
 
 Generation also creates capped 3D room masses at a default height of **14 feet**, keeps stairs and corridors flat, and exports the current 2D plan to `floorplan.svg` in the Week 1 Build root. Floors remain side by side.
@@ -10,6 +10,8 @@ Generation also creates capped 3D room masses at a default height of **14 feet**
 `ExcelToBubbleDiagram` ports the archived Grasshopper definition in `../grasshopper_build/ExcelToBubbleDiagram.ghx`. `Generate2DFloorplan` ports Components 03–06 of the Excel → Grasshopper pipeline. Bubble positions come from Rhino circles; room metadata comes from object user text. Shared Excel workbooks remain in the project root, one folder above this guide.
 
 ## Build and load
+
+Use a .NET 8 or newer SDK to build. Run Rhino with the .NET 8 Desktop Runtime. Rhino 8.20 and newer default to .NET 8, and `/netcore-8` selects it explicitly when launching Rhino. See [McNeel's runtime instructions](https://www.rhino3d.com/docs/guides/netcore/).
 
 1. From this folder, build:
 
@@ -34,13 +36,27 @@ Those tests cover metadata parsing, floor assignment, clustering, exact room are
 
 The project references Rhino 8 `netcore` `RhinoCommon.dll`, Grasshopper `KangarooSolver.dll` (Copy Local = false), and the ClosedXML NuGet package. Grasshopper must be installed so Kangaroo2 can load at runtime.
 
+### Bubble Solver component
+
+`../BubbleSolver/BubbleSolver.csproj` builds its own `BubbleSolver.dll` with no Rhino or Kangaroo dependency. The plug-in references that project directly. The imported solver source and project are preserved as supplied. All workbook mapping, validation, and Rhino geometry conversion live in `BubbleSolverAdapter.cs` and `ComponentBubbleLayout.cs` in this plug-in.
+
+For the new solver, choose `Circle` and press Enter at the boundary prompt. The command reports the solver it uses. `Iterations` controls relaxation, `GapFeet` sets the gap between circle edges in feet (default 2), and `CleanupPasses` caps overlap cleanup (default 1000). The adapter verifies finite geometry, room identities, radii, and final clearance before baking. A capped solve fails with a message to increase `CleanupPasses`. Clearance allows the solver's default 0.01-foot tolerance.
+
+Workbook room areas enter the solver in square feet. Solver coordinates and radii are meters and are converted to the Rhino document units. Floor labels are mapped to local integer IDs and restored for layers and metadata. Departments use the leading numeric token, matching the original reader (`7.10` and `7.20` belong to department 7). Existing undirected connections become two directed solver edges. Original UIDs, square-foot areas, labels, department strings, colors, and floor preferences are retained for `Generate2DFloorplan`.
+
+Each floor is solved independently and displayed apart from the others. `BoundaryScale` adds a frame around the resulting circular diagram. Choosing a boundary or `Square` uses the existing Kangaroo engine, where `Damping` and the boundary constraint apply. `GapFeet` and `CleanupPasses` apply to the new solver path. The downstream floorplan generator continues to assign floors according to its capacity rules and floor preferences.
+
+Keep `BubbleSolver.dll` and the other output dependencies beside `Rhino2DGeometry.rhp` when installing. Close Rhino before rebuilding the installed plug-in, then restart it to load the new assemblies.
+
+The standalone test runner checks all three root workbooks through the adapter. Adding `--rhino` checks circle baking, metadata, clearance, and floorplan generation in feet, meters, and millimeters, including the two-floor workbook and legacy constrained/square layouts. This option requires a Rhino runtime that supports in-process initialization.
+
 ### Excel department breaks and omitted rooms
 
 `ExcelToBubbleDiagram` ignores blank rows and rows with `Room Qty/ Units` equal to zero, including the zero-filled department separators produced by workbook formulas. Import continues with the following department. Named zero-quantity spaces are reported as skipped in the command output; they contribute no bubbles, area, or connections. Connections targeting an omitted space are reported as unmatched.
 
 Missing, nonnumeric, negative, or nonfinite quantities still fail validation with the Excel row number. Rooms with a positive quantity still require a finite, positive `Net SF/ Units`; excluded rows do not require an area. The standalone tests cover this behavior using temporary fixtures and both root workbooks.
 
-Collision corrections are averaged across each bubble's overlapping neighbors, with contact counts included in the goal weights. This keeps dense clusters from receiving an excessive summed movement. Invalid or runaway solver positions stop generation before geometry is baked. Managed tests cover dense collisions and coincident centers; the optional `--rhino` test also solves the root workbook and verifies 151 baked circles.
+For Kangaroo layouts, collision corrections are averaged across each bubble's overlapping neighbors, with contact counts included in the goal weights. This keeps dense clusters from receiving an excessive summed movement. Invalid or runaway solver positions stop generation before geometry is baked. Managed tests cover dense collisions and coincident centers; the optional `--rhino` test also solves the root workbook and verifies 151 baked circles.
 
 ## Bubble object user text
 

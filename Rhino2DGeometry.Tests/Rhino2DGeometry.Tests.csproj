@@ -14,6 +14,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="ExcelReaderTests.cs" />
     <Compile Include="BubbleLayoutTests.cs" />
+    <Compile Include="BubbleSolverAdapterTests.cs" />
     <Compile Include="..\ExcelToBubbleDiagramCommand.cs" Link="ExcelToBubbleDiagramCommand.cs" />
     <Compile Include="..\Rhino2DGeometry\BubbleSolverAdapter.cs" />
     <Compile Include="..\Rhino2DGeometry\ComponentBubbleLayout.cs" />
