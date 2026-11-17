@@ -43,6 +43,7 @@ public sealed class FloorLayout
 public static class BubbleScenes
 {
     private const double FtPerM = 1 / 0.3048;
+    private const string VerticalCorridorColor = "#00B8D9";
 
     public static Scene Build(
         IReadOnlyList<BubbleResult> rooms,
@@ -100,7 +101,9 @@ public static class BubbleScenes
         foreach (BubbleResult r in rooms)
         {
             info.TryGetValue(r.Uid, out RoomInfo? ri);
-            string fill = ri?.Color ?? "#999999";
+            string fill = r.Label == "Vertical Corridor"
+                ? VerticalCorridorColor
+                : ri?.Color ?? "#999999";
 
             bubbleLayer.Add(new Circle(r.X + Ox(r), r.Y, r.Radius)
             {
@@ -184,6 +187,12 @@ public static class BubbleScenes
         {
             if (!info.TryGetValue(r.Uid, out RoomInfo? ri))
             {
+                if (r.Label == "Vertical Corridor")
+                {
+                    labelLayer.Add(new Label(r.X + Ox(r), r.Y, "0", r.Radius * 0.42, Bold: true)
+                    { Style = textDark, Tooltip = r.Label });
+                }
+
                 continue;
             }
 
@@ -220,6 +229,18 @@ public static class BubbleScenes
                 legendLayer.Add(new Rect(lx, ly - sw, sw, sw) { Style = new Style(Fill: fill, Stroke: Style.Darken(fill), FillOpacity: 0.8) });
                 program.Departments.TryGetValue(dg.Key, out string? name);
                 legendLayer.Add(new Label(lx + sw * 1.4, ly - sw / 2, $"{dg.Key}  {name}  ({dg.Count()})", sw * 0.6, Anchor: "start") { Style = textSoft });
+                ly -= sw * 1.5;
+            }
+
+            int corridorCount = rooms.Count(r => r.Label == "Vertical Corridor");
+            if (corridorCount > 0)
+            {
+                legendLayer.Add(new Rect(lx, ly - sw, sw, sw)
+                {
+                    Style = new Style(Fill: VerticalCorridorColor, Stroke: Style.Darken(VerticalCorridorColor), FillOpacity: 0.8)
+                });
+                legendLayer.Add(new Label(lx + sw * 1.4, ly - sw / 2, $"0  Vertical Corridor  ({corridorCount})", sw * 0.6, Anchor: "start")
+                { Style = textSoft });
                 ly -= sw * 1.5;
             }
 

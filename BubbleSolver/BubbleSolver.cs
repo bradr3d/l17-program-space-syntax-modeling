@@ -126,11 +126,44 @@ namespace BubbleSolver
         ) {
             config ??= new BubbleSolverConfig();
 
-            int n = rooms.Count;
-            if (n == 0)
+            if (rooms.Count == 0)
             {
                 return new BubbleSolverResult { Info = "No rooms supplied." };
             }
+
+            // ---- add a vertical corridor bubble for each floor ----------
+            // resterooms should be around the verticle corridors
+            RoomInput? restroom = rooms.FirstOrDefault(
+                r => r.Label.Contains("restroom", StringComparison.OrdinalIgnoreCase));
+            if (restroom is null)
+            {
+                throw new ArgumentException(
+                    "A room labeled as a restroom is required to size the vertical corridor bubble.",
+                    nameof(rooms));
+            }
+
+            List<RoomInput> solverRooms = new(rooms);
+            HashSet<string> uids = new(rooms.Select(r => r.Uid), StringComparer.Ordinal);
+            foreach (int roomFloor in rooms.Select(r => r.Floor).Distinct())
+            {
+                string corridorUid = $"__vertical_corridor_floor_{roomFloor}";
+                int suffix = 1;
+                while (!uids.Add(corridorUid))
+                {
+                    corridorUid = $"__vertical_corridor_floor_{roomFloor}_{suffix++}";
+                }
+
+                solverRooms.Add(new RoomInput
+                {
+                    Uid = corridorUid,
+                    Area = restroom.Area,
+                    Floor = roomFloor,
+                    Label = "Vertical Corridor",
+                    Dept = -1
+                });
+            }
+
+            int n = solverRooms.Count;
 
             // ---- unit conversion: input units -> arbitrary "model" units -------
             // (In the prototype this tracked the Rhino document's unit system.
@@ -140,11 +173,11 @@ namespace BubbleSolver
             double pad = config.Padding * linScale;
 
             // ---- per-room arrays ------------------------------------------------
-            string[] uid = rooms.Select(r => r.Uid).ToArray();
-            double[] radius = rooms.Select(r => AreaToRadius(r.Area, linScale)).ToArray();
-            int[] floor = rooms.Select(r => r.Floor).ToArray();
-            string[] label = rooms.Select(r => r.Label).ToArray();
-            int[] dept = rooms.Select(r => r.Dept).ToArray();
+            string[] uid = solverRooms.Select(r => r.Uid).ToArray();
+            double[] radius = solverRooms.Select(r => AreaToRadius(r.Area, linScale)).ToArray();
+            int[] floor = solverRooms.Select(r => r.Floor).ToArray();
+            string[] label = solverRooms.Select(r => r.Label).ToArray();
+            int[] dept = solverRooms.Select(r => r.Dept).ToArray();
 
             Dictionary<string, int> idxOf = new(n);
             for (int i = 0; i < n; i++)
